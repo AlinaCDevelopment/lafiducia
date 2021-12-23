@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "409562566995",
+    "project_id": "la-fiducia-323513",
+    "storage_bucket": "la-fiducia-323513.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409562566995:android:4cd1f7086ba0f985f691a6",
+        "android_client_info": {
+          "package_name": "lu.lafiducia.la_fiducia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409562566995-bkqgip5nf7pno9jmfhlhqthig5mbmrkm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "lu.lafiducia.la_fiducia",
+            "certificate_hash": "a52d650587307bbc61dec59920301c27e2f96d1c"
+          }
+        },
+        {
+          "client_id": "409562566995-61bk0mcnbdrpfkh7q7p1gm6olbbag4st.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtpDw7akOrQjoKEew3vr-wQxBAlzOUFpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409562566995-61bk0mcnbdrpfkh7q7p1gm6olbbag4st.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "409562566995-020lgn39p9erjc1ko9krdverc1c57k3s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.lafiducia.lu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

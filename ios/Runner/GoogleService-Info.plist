@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>409562566995-020lgn39p9erjc1ko9krdverc1c57k3s.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.409562566995-020lgn39p9erjc1ko9krdverc1c57k3s</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>409562566995-bkqgip5nf7pno9jmfhlhqthig5mbmrkm.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC1ZvkmaESiJD-I2AClbwuUsYG42UWv-UQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>409562566995</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>dev.lafiducia.lu</string>
+	<key>PROJECT_ID</key>
+	<string>la-fiducia-323513</string>
+	<key>STORAGE_BUCKET</key>
+	<string>la-fiducia-323513.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:409562566995:ios:e5e6b10dd9d06093f691a6</string>
+</dict>
+</plist>

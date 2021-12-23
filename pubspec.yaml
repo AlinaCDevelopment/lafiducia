@@ -1,0 +1,226 @@
+name: la_fiducia
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 11.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  awesome_package:
+  flutter:
+    sdk: flutter
+  carousel_pro: ^1.0.0
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  dots_indicator: ^2.0.0
+  carousel_slider: ^4.0.0
+  getwidget: ^2.0.3
+  cached_network_image: ^3.1.0
+  flutter_staggered_grid_view: ^0.4.0
+  flutter_cart: ^0.0.6
+  flutter_html: ^2.1.2
+  intl: ^0.17.0
+  device_info: ^2.0.3
+  flutter_spinkit: ^5.1.0
+  get: ^4.3.8
+  logger: ^1.1.0
+  modal_bottom_sheet: ^2.0.0
+  uuid: ^3.0.4
+  enhanced_drop_down: ^0.1.7+1
+  mobx: ^2.0.5
+  shared_preferences: ^2.0.7
+  email_auth: ^1.0.0
+  mailer: ^5.0.2
+  font_awesome_flutter: ^9.2.0
+  fluttertoast: ^8.0.8
+  google_sign_in: ^5.1.0
+  flutter_initicon: ^2.0.0
+  flutter_local_notifications: ^9.0.3
+  flutter_datetime_picker: ^1.5.1
+  flutter_login_facebook: ^1.2.0
+  rename: ^2.0.1
+  package_info_plus: ^1.3.0
+  store_redirect: ^2.0.0
+  awesome_notifications: ^0.6.19
+  
+  
+
+  
+
+dev_dependencies:
+  js: ^0.6.2
+  http: ^0.13.3
+  floor_generator: any
+  build_runner: any 
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.9.1
+
+flutter_icons:
+  image_path: "assets/logo1.3.png"
+  android: true
+  ios: true
+    
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^1.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  fonts: 
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Medium.ttf
+        - asset: fonts/Poppins-SemiBold.ttf
+          weight: 500
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/Positivo.png
+    - assets/introPizza.png
+    - assets/1.png
+    - assets/2.png
+    - assets/fish.png
+    - assets/pizza.png
+    - assets/noodle.png
+    - assets/beef.png
+    - assets/bread.png
+    - assets/cupcake.png
+    - assets/orange-juice.png
+    - assets/salad.png
+    - assets/sausage.png
+    - assets/spaghetti.png
+    - assets/tempura.png
+    - assets/iconAppbar.png
+    - assets/imagem_indisponivel.jpg
+    - assets/next.png
+    - assets/user.png
+    - assets/Ail.png
+    - assets/notification.png
+    - assets/letter.png
+    - assets/sobre-nos.png
+    - assets/food-delivery.png
+    - assets/avatar.png
+    - assets/teste.jpg
+    - assets/carrinhoCompras.png
+    - assets/plats.png
+    - assets/boissons.png
+    - assets/desserts.png
+    - assets/Ingredientes/Melon.jpg
+    - assets/Ingredientes/plus 4 Fromages.jpg
+    - assets/Ingredientes/plus Ail.jpg
+    - assets/Ingredientes/plus Ananas.jpg
+    - assets/Ingredientes/plus Anchois.jpg
+    - assets/Ingredientes/plus Artichaut.jpg
+    - assets/Ingredientes/plus Aubergine.jpg
+    - assets/Ingredientes/plus Basilic.jpg
+    - assets/Ingredientes/plus Bolognese.jpg
+    - assets/Ingredientes/plus Capres.jpg
+    - assets/Ingredientes/plus Carpaccio.jpg
+    - assets/Ingredientes/plus Champ. frais.jpg
+    - assets/Ingredientes/plus Courgettes.jpg
+    - assets/Ingredientes/plus Crevettes.jpg
+    - assets/Ingredientes/plus Escargots.jpg
+    - assets/Ingredientes/plus Fruit de Mer.jpg
+    - assets/Ingredientes/plus Gorgonzola.jpg
+    - assets/Ingredientes/plus Jambom parme.jpg
+    - assets/Ingredientes/plus Jambon cuit.jpg
+    - assets/Ingredientes/plus Lardon.jpg
+    - assets/Ingredientes/plus Mozzarella.jpg
+    - assets/Ingredientes/plus Oeuf.jpg
+    - assets/Ingredientes/plus Oignons.jpg
+    - assets/Ingredientes/plus Olives.jpg
+    - assets/Ingredientes/plus Parmigiano.jpg
+    - assets/Ingredientes/plus Poivrons.jpg
+    - assets/Ingredientes/plus Ricotta.jpg
+    - assets/Ingredientes/plus Rucola.jpg
+    - assets/Ingredientes/plus Salami doux.jpg
+    - assets/Ingredientes/plus Salami Piquant.jpg
+    - assets/Ingredientes/plus Saumon Fume.jpg
+    - assets/Ingredientes/plus Scampis.jpg
+    - assets/Ingredientes/plus Sp. Bolognese.jpg
+    - assets/Ingredientes/plus Thon.jpg
+    - assets/Ingredientes/plus Tomate Fraiche.jpg
+    - assets/Ingredientes/Spagheti natur.jpg
+    - assets/Ingredientes/Supl. Carpaccio.jpg
+    - assets/Ingredientes/Supl. Chevre.jpg
+    - assets/Ingredientes/Supl. Poulet.jpg
+    - assets/Ingredientes/Supl.Creme.jpg
+    - assets/Ingredientes/Supl.Epinards.jpg
+    - assets/Ingredientes/Supl.Viande Hache.jpg
+    - assets/right-arrow.png
+    - assets/menu_hamburger.png
+    - assets/carroInativo.png
+    - assets/carroAtivo.png
+    - assets/panier.png
+    - assets/logout.png
+    - assets/nous.jpg
+    - assets/bannerPrincipal.png
+    - assets/nextBranco.png
+    - assets/notification_map.png
+    - assets/logo1.3.png
+        
+    
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  
+      
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
