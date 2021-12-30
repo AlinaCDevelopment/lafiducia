@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
 import 'package:la_fiducia/pages/checkOut2.dart';
 import 'package:la_fiducia/pages/menu.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 
 class CheckOut3 extends StatefulWidget {
   @override
@@ -36,6 +37,18 @@ class _CheckOut3State extends State<CheckOut3> {
   Future fetchStr() async {
     await new Future.delayed(const Duration(seconds: 2), () {});
     return 'Hello World';
+  }
+
+  Future createPlantFoodNotifications() async {
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+      id: 4,
+      channelKey: 'basic_chanel',
+      title: 'La fiducia commande!!!',
+      body: 'Votre commande a été passée avec succès!',
+      /*bigPicture: 'asset://assets/notification_map.png',
+      notificationLayout: NotificationLayout.BigPicture,*/
+    ));
   }
 
   Widget build(BuildContext context) {
@@ -72,6 +85,7 @@ class _CheckOut3State extends State<CheckOut3> {
                       future: fetchStr(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
+                          createPlantFoodNotifications();
                           return Container(
                             width: MediaQuery.of(context).size.width * 0.5,
                             alignment: Alignment.center,

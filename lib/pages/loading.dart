@@ -5,9 +5,13 @@ import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
+import 'package:mobx/mobx.dart';
 import 'dart:async';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:la_fiducia/pages/atualizar.dart';
+import 'dart:io';
+import 'package:device_info/device_info.dart';
+import 'package:flutter/services.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -83,6 +87,28 @@ class _LoadingState extends State<Loading> {
     }
   }
 
+  String identifier = '';
+  Future<void> _deviceDetails() async {
+    final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        var build = await deviceInfoPlugin.androidInfo;
+
+        setState(() {
+          identifier = 'Android';
+        });
+        //UUID for Android
+      } else if (Platform.isIOS) {
+        var data = await deviceInfoPlugin.iosInfo;
+        setState(() {
+          identifier = 'iOS';
+        }); //UUID for iOS
+      }
+    } on PlatformException {
+      print('Failed to get platform version');
+    }
+  }
+
   List listEstado = [];
   var AbertaFechada;
   Future<List<dynamic>> fetchEstado() async {
@@ -107,6 +133,38 @@ class _LoadingState extends State<Loading> {
     }
   }
 
+  List listVersaoAndroid = [];
+  Future<List<dynamic>> fetchVersaoAndroid() async {
+    final response =
+        await http.get(Uri.parse('${ApiDevLafiducia}/versao-android/'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return listVersaoAndroid = json.decode(response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
+
+  List listVersaoIos = [];
+  Future<List<dynamic>> fetchVersaoIos() async {
+    final response =
+        await http.get(Uri.parse('${ApiDevLafiducia}/versao-ios/'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return listVersaoIos = json.decode(response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load album');
+    }
+  }
+
   @override
   void initState() {
     fetchEstado();
@@ -121,6 +179,7 @@ class _LoadingState extends State<Loading> {
   String packageName = '';
   String version = '';
   String buildNumber = '';
+  var teste = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -130,6 +189,16 @@ class _LoadingState extends State<Loading> {
         buildNumber = packageInfo.buildNumber;
       });
     });
+
+    if (teste == 0) {
+      _deviceDetails();
+      fetchVersaoAndroid();
+      fetchVersaoIos();
+      teste++;
+    }
+    print(listVersaoAndroid[0]['v_android']);
+    print(listVersaoIos[0]['v_ios']);
+    print(version);
 
     if (i < 1) {
       if (AbertaFechada == 200) {
@@ -151,16 +220,30 @@ class _LoadingState extends State<Loading> {
                   _buildPopupDialogFolga(context),
             );
           });
-        } else if (version != '11.0') {
-          Timer.run(() {
-            Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (BuildContext context) => Atualizar(),
-              ),
-              (route) => false,
-            );
-          });
+        } else if (identifier == 'Android') {
+          if (version != listVersaoAndroid[0]['v_android'].toString()) {
+            Timer.run(() {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => Atualizar(),
+                ),
+                (route) => false,
+              );
+            });
+          }
+        } else if (identifier == 'iOS') {
+          if (version != listVersaoIos[0]['v_ios'].toString()) {
+            Timer.run(() {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => Atualizar(),
+                ),
+                (route) => false,
+              );
+            });
+          }
         }
       } else if (AbertaFechada == 400) {
         i++;
@@ -198,7 +281,7 @@ class _LoadingState extends State<Loading> {
                             ),
                           ]),
                     )),
-                Padding(
+                /*Padding(
                   padding: EdgeInsets.all(40.0),
                   child: Align(
                       alignment: Alignment.bottomCenter,
@@ -209,7 +292,7 @@ class _LoadingState extends State<Loading> {
                             fontSize: 10.0,
                             color: Color.fromRGBO(114, 20, 17, 1)),
                       )),
-                ),
+                ),*/
                 const Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Align(

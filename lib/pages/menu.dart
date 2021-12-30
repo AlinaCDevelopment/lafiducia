@@ -46,10 +46,10 @@ class _MenuState extends State<Menu> {
         content: NotificationContent(
       id: 4,
       channelKey: 'basic_chanel',
-      title: '${Emojis.food_pizza} Prato do dia!!!',
-      body: 'O prato do dia está disponível',
-      bigPicture: 'asset://assets/notification_map.png',
-      notificationLayout: NotificationLayout.BigPicture,
+      title: 'Commande La fiducia!',
+      body: 'Votre commande a été passée avec succès!',
+      /*bigPicture: 'asset://assets/notification_map.png',
+      notificationLayout: NotificationLayout.BigPicture,*/
     ));
   }
 
@@ -462,12 +462,12 @@ class _MenuState extends State<Menu> {
                 ],
               ),
               /* PUSH NOTIFICATIONS */
-              /*IconButton(
+              IconButton(
                 icon: Image.asset('assets/next.png'),
                 onPressed: () {
                   createPlantFoodNotifications();
                 },
-              ),*/
+              ),
             ],
           ),
           drawer: Container(
