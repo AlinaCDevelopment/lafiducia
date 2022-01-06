@@ -232,16 +232,14 @@ class _InfromationsState extends State<Infromations> {
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                               ),
-                              suffixIcon: nomController.text.isEmpty
-                                  ? IconButton(
-                                      icon: Icon(
-                                        const IconData(0xeaed,
-                                            fontFamily: 'MaterialIcons'),
-                                        color: Color.fromRGBO(181, 142, 0, 1),
-                                      ),
-                                      onPressed: nomController.clear,
-                                    )
-                                  : Container(width: 0)),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  const IconData(0xeaed,
+                                      fontFamily: 'MaterialIcons'),
+                                  color: Color.fromRGBO(181, 142, 0, 1),
+                                ),
+                                onPressed: nomController.clear,
+                              )),
                         ),
                       ),
                     ),

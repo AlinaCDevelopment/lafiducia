@@ -20,6 +20,7 @@ import 'dart:math';
 import 'package:la_fiducia/pages/quantityButton.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:la_fiducia/pages/constants.dart';
+import 'dart:ui';
 
 class Detalhes extends StatefulWidget {
   final String titleappbar;
@@ -395,6 +396,11 @@ class _DetalhesState extends State<Detalhes> {
 
   @override
   Widget build(BuildContext context) {
+    var pixelRatio = window.devicePixelRatio;
+
+    //Size in physical pixels
+    var physicalScreenSize = window.physicalSize;
+    var physicalHeight = physicalScreenSize.height;
     fetchidMain();
     return WillPopScope(
         onWillPop: () async {
@@ -1336,10 +1342,7 @@ class _DetalhesState extends State<Detalhes> {
                                                     }),
                                                 color: Colors.white,
                                                 width: 1000.0,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    4,
+                                                height: physicalHeight / 0.78,
                                               ),
                                             ],
                                           )

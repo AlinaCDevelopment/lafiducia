@@ -498,9 +498,8 @@ class _MenuEstudanteState extends State<MenuEstudante> {
                         });
                   } else {
                     return const Center(
-                        child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Color.fromRGBO(181, 142, 0, 0.9))));
+                      child: Text("Il n'y a pas de produits"),
+                    );
                   }
                 }),
           ],

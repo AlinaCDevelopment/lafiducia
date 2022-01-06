@@ -346,16 +346,18 @@ class _MesCommandesState extends State<MesCommandes> {
                                       MediaQuery.of(context).size.height * 0.03,
                                   child: OutlinedButton(
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (_) => MesCommandes2(
-                                            idEncomenda: encomenda![index]
-                                                    ['id_encomenda']
-                                                .toString(),
+                                      Future.delayed(Duration(seconds: 1), () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => MesCommandes2(
+                                              idEncomenda: encomenda![index]
+                                                      ['id_encomenda']
+                                                  .toString(),
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      });
                                     },
                                     child: const Text('VOIR PLUS',
                                         style: TextStyle(

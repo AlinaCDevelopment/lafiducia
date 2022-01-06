@@ -230,8 +230,7 @@ class _DessertsState extends State<Desserts> {
                         if (listProdutosCarrinho!.isNotEmpty)
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Cart(
-                              ),
+                              builder: (context) => Cart(),
                             ),
                           );
                       },
@@ -254,8 +253,7 @@ class _DessertsState extends State<Desserts> {
                         if (listProdutosCarrinho!.isNotEmpty)
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => Cart(
-                              ),
+                              builder: (context) => Cart(),
                             ),
                           );
                       },
@@ -454,7 +452,7 @@ class _DessertsState extends State<Desserts> {
                                     gridDelegate:
                                         SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 1,
-                                      childAspectRatio: 1,
+                                      childAspectRatio: 1.02,
                                     ),
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: snapshot.data.length,

@@ -462,12 +462,12 @@ class _MenuState extends State<Menu> {
                 ],
               ),
               /* PUSH NOTIFICATIONS */
-              IconButton(
+              /*IconButton(
                 icon: Image.asset('assets/next.png'),
                 onPressed: () {
                   createPlantFoodNotifications();
                 },
-              ),
+              ),*/
             ],
           ),
           drawer: Container(
@@ -776,7 +776,7 @@ class _MenuState extends State<Menu> {
                               Container(
                                 height:
                                     MediaQuery.of(context).size.height * 0.06,
-                                child: Align(
+                                /*child: Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -838,7 +838,7 @@ class _MenuState extends State<Menu> {
                                       ],
                                     ),
                                   ),
-                                ),
+                                ),*/
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
@@ -1139,7 +1139,7 @@ class _MenuState extends State<Menu> {
                               Container(
                                 height:
                                     MediaQuery.of(context).size.height * 0.06,
-                                child: Align(
+                                /*child: Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -1192,7 +1192,7 @@ class _MenuState extends State<Menu> {
                                       ],
                                     ),
                                   ),
-                                ),
+                                ),*/
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,

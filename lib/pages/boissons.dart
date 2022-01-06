@@ -233,8 +233,7 @@ class _BoissonsState extends State<Boissons> {
                               if (listProdutosCarrinho!.isNotEmpty)
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => Cart(
-                                    ),
+                                    builder: (context) => Cart(),
                                   ),
                                 );
                             },
@@ -258,8 +257,7 @@ class _BoissonsState extends State<Boissons> {
                               if (listProdutosCarrinho!.isNotEmpty)
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => Cart(
-                                    ),
+                                    builder: (context) => Cart(),
                                   ),
                                 );
                             },
@@ -495,7 +493,7 @@ class _BoissonsState extends State<Boissons> {
                                                     gridDelegate:
                                                         SliverGridDelegateWithFixedCrossAxisCount(
                                                       crossAxisCount: 1,
-                                                      childAspectRatio: 1,
+                                                      childAspectRatio: 1.02,
                                                     ),
                                                     physics:
                                                         NeverScrollableScrollPhysics(),

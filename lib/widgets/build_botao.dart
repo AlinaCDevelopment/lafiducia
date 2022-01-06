@@ -48,11 +48,11 @@ class _BuildbotaoState extends State<Buildbotao> {
   Future<List<dynamic>> fetchMenuEstudante() async {
     http.Response response;
     response = await http.get(Uri.parse('${ApiDevLafiducia}/menu-estudante/'));
-    if (response.statusCode == 200) {
-      numBolas = listResponse!.length;
-    } else if (response.statusCode == 400) {
+    /*if (response.statusCode == 400) {*/
+    numBolas = listResponse!.length;
+    /*} else if (response.statusCode == 400) {
       numBolas = listResponse!.length - 1;
-    }
+    }*/
     return listMenuEstudante = json.decode(response.body);
   }
 

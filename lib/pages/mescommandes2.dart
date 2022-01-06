@@ -37,11 +37,11 @@ class MesCommandes2 extends StatefulWidget {
 class _MesCommandes2State extends State<MesCommandes2> {
   @override
   void initState() {
+    super.initState();
     getToken();
     fetchEncomendasEncomenda();
     fetchEncomendasUser();
     fetchEncomendaProd();
-    super.initState();
   }
 
   String token = '';
@@ -503,82 +503,91 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                       }
                                     }
 
-                                    return Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SizedBox(
+                                    if (snapshot.hasData) {
+                                      return Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      30),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    30),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  10,
-                                              child: Text('PLAT',
-                                                  style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        45, 61, 75, 1),
-                                                    fontFamily: 'Poppins',
-                                                    package: 'awesome_package',
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                            ),
-                                            SizedBox(
+                                                    10,
+                                                child: Text('PLAT',
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          45, 61, 75, 1),
+                                                      fontFamily: 'Poppins',
+                                                      package:
+                                                          'awesome_package',
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    )),
+                                              ),
+                                              SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      30),
+                                              SizedBox(
                                                 width: MediaQuery.of(context)
                                                         .size
                                                         .width /
-                                                    30),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.6,
-                                              child: Text(
-                                                  '${listEncomendaProd?[index]['nome']}',
-                                                  style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        45, 61, 75, 1),
-                                                    fontFamily: 'Poppins',
-                                                    package: 'awesome_package',
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.w500,
-                                                  )),
-                                            ),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  10,
-                                              child: Text(
-                                                  '${listEncomendaProd?[index]['pvp']}€',
-                                                  style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        45, 61, 75, 1),
-                                                    fontFamily: 'Poppins',
-                                                    package: 'awesome_package',
-                                                    fontSize: 13,
-                                                    fontWeight: FontWeight.w400,
-                                                  )),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          child: FutureBuilder(
-                                              future: fetchEncomendaProd(),
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot snapshot) {
-                                                return FutureBuilder(
-                                                    future: fetchEncomendaIng(),
-                                                    builder:
-                                                        (BuildContext context,
-                                                            AsyncSnapshot
-                                                                snapshot) {
-                                                      if (snapshot.hasData) {
+                                                    1.6,
+                                                child: Text(
+                                                    '${listEncomendaProd?[index]['nome'] ?? ''}',
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          45, 61, 75, 1),
+                                                      fontFamily: 'Poppins',
+                                                      package:
+                                                          'awesome_package',
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    )),
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    10,
+                                                child: Text(
+                                                    '${listEncomendaProd?[index]['pvp'] ?? ''}€',
+                                                    style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          45, 61, 75, 1),
+                                                      fontFamily: 'Poppins',
+                                                      package:
+                                                          'awesome_package',
+                                                      fontSize: 13,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    )),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            child: FutureBuilder(
+                                                future: fetchEncomendaProd(),
+                                                builder: (BuildContext context,
+                                                    AsyncSnapshot snapshot) {
+                                                  return FutureBuilder(
+                                                      future:
+                                                          fetchEncomendaIng(),
+                                                      builder:
+                                                          (BuildContext context,
+                                                              AsyncSnapshot
+                                                                  snapshot) {
                                                         return ListView.builder(
+                                                            physics:
+                                                                NeverScrollableScrollPhysics(),
                                                             shrinkWrap: true,
                                                             itemCount:
                                                                 listIngredientes!
@@ -648,7 +657,7 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                                                           Align(
                                                                             alignment:
                                                                                 Alignment.centerLeft,
-                                                                            child: Text('${listIngredientes?[index]['nome']}',
+                                                                            child: Text('${listIngredientes?[index]['nome'] ?? ''}',
                                                                                 style: TextStyle(
                                                                                   color: Color.fromRGBO(45, 61, 75, 1),
                                                                                   fontFamily: 'Poppins',
@@ -662,7 +671,7 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                                                                 Alignment.centerLeft,
                                                                             child:
                                                                                 Text(
-                                                                              'QUANTITÉ' + ' ' + (listIngredientes?[index]['quantidade'] ?? 0).toString(),
+                                                                              'QUANTITÉ' + ' ' + (listIngredientes?[index]['quantidade'] ?? '').toString(),
                                                                               style: const TextStyle(
                                                                                 fontFamily: 'Poppins',
                                                                                 package: 'awesome_package',
@@ -681,7 +690,7 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                                                               .width /
                                                                           10,
                                                                       child: Text(
-                                                                          '${totlez.toString()}€',
+                                                                          '${totlez ?? ''.toString()}€',
                                                                           style:
                                                                               TextStyle(
                                                                             color: Color.fromRGBO(
@@ -703,32 +712,33 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                                                 ),
                                                               );
                                                             });
-                                                      } else {
-                                                        return Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 15.0),
-                                                          child: Container(
-                                                              height: 300,
-                                                              child: Center(
-                                                                  child: CircularProgressIndicator(
-                                                                      valueColor: AlwaysStoppedAnimation<Color>(Color.fromRGBO(
-                                                                          181,
-                                                                          142,
-                                                                          0,
-                                                                          0.9))))),
-                                                        );
-                                                      }
-                                                    });
-                                              }),
-                                        ),
-                                        Divider(
-                                          color:
-                                              Color.fromRGBO(190, 190, 190, 1),
-                                        ),
-                                      ],
-                                    );
+                                                      });
+                                                }),
+                                          ),
+                                          Divider(
+                                            color: Color.fromRGBO(
+                                                190, 190, 190, 1),
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 15.0),
+                                        child: Container(
+                                            height: 300,
+                                            child: Center(
+                                                child: CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                                Color>(
+                                                            Color.fromRGBO(
+                                                                181,
+                                                                142,
+                                                                0,
+                                                                0.9))))),
+                                      );
+                                    }
                                   });
                             }),
                         Padding(
@@ -759,7 +769,7 @@ class _MesCommandes2State extends State<MesCommandes2> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 9,
                                 child: Text(
-                                    '${listEncomendasEncomendas?[0]['preco'] ?? 0} €',
+                                    '${listEncomendasEncomendas?[0]['preco'] ?? ''} €',
                                     style: TextStyle(
                                       color: Color.fromRGBO(45, 61, 75, 1),
                                       fontFamily: 'Poppins',

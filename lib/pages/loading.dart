@@ -173,11 +173,14 @@ class _LoadingState extends State<Loading> {
     super.initState();
   }
 
+  late double VERSIONANDOID;
+  late double VERSIONIOS;
+  late double version;
+
   var i = 0;
 
   String appName = '';
   String packageName = '';
-  String version = '';
   String buildNumber = '';
   var teste = 0;
 
@@ -185,7 +188,7 @@ class _LoadingState extends State<Loading> {
   Widget build(BuildContext context) {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
-        version = packageInfo.version;
+        version = double.parse(packageInfo.version);
         buildNumber = packageInfo.buildNumber;
       });
     });
@@ -196,9 +199,9 @@ class _LoadingState extends State<Loading> {
       fetchVersaoIos();
       teste++;
     }
-    print(listVersaoAndroid[0]['v_android']);
-    print(listVersaoIos[0]['v_ios']);
-    print(version);
+
+    VERSIONANDOID = double.parse(listVersaoAndroid[0]['v_android']);
+    VERSIONIOS = double.parse(listVersaoIos[0]['v_ios']);
 
     if (i < 1) {
       if (AbertaFechada == 200) {
@@ -221,7 +224,7 @@ class _LoadingState extends State<Loading> {
             );
           });
         } else if (identifier == 'Android') {
-          if (version != listVersaoAndroid[0]['v_android'].toString()) {
+          if (version < VERSIONANDOID) {
             Timer.run(() {
               Navigator.pushAndRemoveUntil(
                 context,
@@ -233,7 +236,7 @@ class _LoadingState extends State<Loading> {
             });
           }
         } else if (identifier == 'iOS') {
-          if (version != listVersaoIos[0]['v_ios'].toString()) {
+          if (version < VERSIONIOS) {
             Timer.run(() {
               Navigator.pushAndRemoveUntil(
                 context,

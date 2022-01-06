@@ -31,7 +31,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final plugin = FacebookLogin(debug: true);
+  final plugin = FacebookLogin(debug: false);
   bool _isLoading = false;
   var errorMsg;
   final TextEditingController mailController = new TextEditingController();
@@ -107,20 +107,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _onPressedExpressLogInButton(BuildContext context) async {
-    final res = await widget.plugin.expressLogin();
-    if (res.status == FacebookLoginStatus.success) {
-      await _updateLoginInfo();
-    } else {
-      await showDialog<Object>(
-        context: context,
-        builder: (context) => const AlertDialog(
-          content: Text("Can't make express log in. Try regular log in."),
-        ),
-      );
-    }
-  }
-
   Future<void> _onPressedLogInButton() async {
     await widget.plugin.logIn(permissions: [
       FacebookPermission.publicProfile,
@@ -132,8 +118,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
-    _getSdkVersion();
-    _updateLoginInfo();
     super.initState();
     mailController.addListener(onListen);
     mailControllerRecupPass.addListener(onListen);
@@ -165,6 +149,8 @@ class _LoginPageState extends State<LoginPage> {
   WillPopScope buildDraweeer(BuildContext context) {
     if (i == 0) {
       _deviceDetails();
+      _getSdkVersion();
+      _updateLoginInfo();
       i++;
     }
     return WillPopScope(
@@ -652,11 +638,6 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Future<void> _onPressedLogOutButton() async {
-    await plugin.logOut();
-    await _updateLoginInfo();
-  }
-
   Future signInGoogle() async {
     final user = await GoogleSignInApi.login();
 
@@ -701,8 +682,6 @@ class _LoginPageState extends State<LoginPage> {
     String MailX = _email.toString();
 
     signInJaRegistado(String mail) async {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
       var response = await http
           .get(Uri.parse('${ApiDevLafiducia}/verifica-email/${mail}/'));
 
@@ -728,7 +707,7 @@ class _LoginPageState extends State<LoginPage> {
               builder: (context) => Menu(),
             ),
           );
-          signInFaceBook();
+          /*signInFaceBook();*/
         }
       } else if (response.statusCode == 400) {
         Future.delayed(Duration(milliseconds: 1000), () {

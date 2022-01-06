@@ -273,7 +273,7 @@ class _Drawer1State extends State<Drawer1> {
               Divider(
                 color: Color.fromRGBO(145, 45, 40, 1),
               ),
-              Padding(
+              /*Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
@@ -307,7 +307,7 @@ class _Drawer1State extends State<Drawer1> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
               Divider(
                 color: Color.fromRGBO(145, 45, 40, 1),
               ),

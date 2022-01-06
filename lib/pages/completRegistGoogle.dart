@@ -47,6 +47,8 @@ class Confirm extends StatefulWidget {
 class _ConfirmState extends State<Confirm> {
   @override
   void initState() {
+    nomController.text = "${widget.nome}";
+    mailcontroller.text = "${widget.mail}";
     _getCitiesList();
     super.initState();
   }
@@ -112,9 +114,9 @@ class _ConfirmState extends State<Confirm> {
     prefs.setString(key, json.encode(value));
   }
 
-  final TextEditingController nomController = new TextEditingController();
+  TextEditingController nomController = new TextEditingController();
   final TextEditingController telefoneController = new TextEditingController();
-  final TextEditingController mailcontroller = new TextEditingController();
+  TextEditingController mailcontroller = new TextEditingController();
   final TextEditingController moradaController = new TextEditingController();
   final TextEditingController codigoPostalController =
       new TextEditingController();
@@ -218,16 +220,14 @@ class _ConfirmState extends State<Confirm> {
                                 fontSize: 17,
                                 fontWeight: FontWeight.w400,
                               ),
-                              suffixIcon: nomController.text.isEmpty
-                                  ? IconButton(
-                                      icon: Icon(
-                                        const IconData(0xeaed,
-                                            fontFamily: 'MaterialIcons'),
-                                        color: Color.fromRGBO(181, 142, 0, 1),
-                                      ),
-                                      onPressed: nomController.clear,
-                                    )
-                                  : Container(width: 0)),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  const IconData(0xeaed,
+                                      fontFamily: 'MaterialIcons'),
+                                  color: Color.fromRGBO(181, 142, 0, 1),
+                                ),
+                                onPressed: nomController.clear,
+                              )),
                         ),
                       ),
                     ),
@@ -279,17 +279,14 @@ class _ConfirmState extends State<Confirm> {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,
                                   ),
-                                  suffixIcon: mailcontroller.text.isEmpty
-                                      ? IconButton(
-                                          icon: Icon(
-                                            const IconData(0xeaed,
-                                                fontFamily: 'MaterialIcons'),
-                                            color:
-                                                Color.fromRGBO(181, 142, 0, 1),
-                                          ),
-                                          onPressed: mailcontroller.clear,
-                                        )
-                                      : Container(width: 0)),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      const IconData(0xeaed,
+                                          fontFamily: 'MaterialIcons'),
+                                      color: Color.fromRGBO(181, 142, 0, 1),
+                                    ),
+                                    onPressed: mailcontroller.clear,
+                                  )),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: 'Poppins',
