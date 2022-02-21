@@ -172,12 +172,7 @@ class _MesCommandesState extends State<MesCommandes> {
                       var hora = encomenda?[index]['data'].substring(11, 16);
 
                       var tipoEncomenda;
-                      if (encomenda?[index]['envio'] ==
-                          'LIVRAISON À DOMICILE (2,50€)') {
-                        tipoEncomenda = 'LIVRAISON À DOMICILE';
-                      } else {
-                        tipoEncomenda = 'RAMASSER AU RESTAURANT';
-                      }
+                      tipoEncomenda = encomenda?[index]['envio'];
 
                       if (encomenda![index]['estado_encomenda'] == 1) {
                         estadoEncomenda = 'En préparation';

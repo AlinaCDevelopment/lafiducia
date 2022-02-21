@@ -133,7 +133,7 @@ class _LoadingState extends State<Loading> {
     }
   }
 
-  List listVersaoAndroid = [];
+  List? listVersaoAndroid;
   Future<List<dynamic>> fetchVersaoAndroid() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/versao-android/'));
@@ -149,7 +149,7 @@ class _LoadingState extends State<Loading> {
     }
   }
 
-  List listVersaoIos = [];
+  List? listVersaoIos;
   Future<List<dynamic>> fetchVersaoIos() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/versao-ios/'));
@@ -199,60 +199,65 @@ class _LoadingState extends State<Loading> {
       fetchVersaoIos();
       teste++;
     }
+    Future.delayed(const Duration(milliseconds: 20), () {
+      VERSIONANDOID = double.parse(listVersaoAndroid?[0]['v_android'] ?? 0);
+      VERSIONIOS = double.parse(listVersaoIos?[0]['v_ios'] ?? 0);
+    });
 
-    VERSIONANDOID = double.parse(listVersaoAndroid[0]['v_android']);
-    VERSIONIOS = double.parse(listVersaoIos[0]['v_ios']);
-
-    if (i < 1) {
-      if (AbertaFechada == 200) {
-        i++;
-        setupWorldTime();
-        if (FechadoFerias == 400) {
-          Timer.run(() {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) =>
-                  _buildPopupDialogFerias(context),
-            );
-          });
-        } else if (FechadoFolga == 400) {
-          Timer.run(() {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) =>
-                  _buildPopupDialogFolga(context),
-            );
-          });
-        } else if (identifier == 'Android') {
-          if (version < VERSIONANDOID) {
+    /*VERSIONANDOID = 12.4;
+    VERSIONIOS = 13.0;*/
+    Future.delayed(const Duration(milliseconds: 20), () {
+      if (i < 1) {
+        if (AbertaFechada == 200) {
+          i++;
+          setupWorldTime();
+          if (FechadoFerias == 400) {
             Timer.run(() {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => Atualizar(),
-                ),
-                (route) => false,
+              showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildPopupDialogFerias(context),
               );
             });
-          }
-        } else if (identifier == 'iOS') {
-          if (version < VERSIONIOS) {
+          } else if (FechadoFolga == 400) {
             Timer.run(() {
-              Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => Atualizar(),
-                ),
-                (route) => false,
+              showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildPopupDialogFolga(context),
               );
             });
+          } else if (identifier == 'Android') {
+            if (13.1 < VERSIONANDOID) {
+              Timer.run(() {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => Atualizar(),
+                  ),
+                  (route) => false,
+                );
+              });
+            }
+          } else if (identifier == 'iOS') {
+            if (13.1 < VERSIONIOS) {
+              Timer.run(() {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => Atualizar(),
+                  ),
+                  (route) => false,
+                );
+              });
+            }
           }
+        } else if (AbertaFechada == 400) {
+          i++;
+          ecraDeMabutencao();
         }
-      } else if (AbertaFechada == 400) {
-        i++;
-        ecraDeMabutencao();
       }
-    }
+    });
 
     return Scaffold(
       body: FutureBuilder(

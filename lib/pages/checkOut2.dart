@@ -355,7 +355,7 @@ class _CheckOut2State extends State<CheckOut2> {
 
     if (widget.tipoLevantamento == 'LIVRAISON À DOMICILE') {
       if (double.parse(widget.totalCarrinho) < 20) {
-        portes = 2.50;
+        portes = 3.00;
       } else {
         portes = 0;
       }

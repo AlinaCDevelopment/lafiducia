@@ -98,6 +98,8 @@ class _MesCommandes2State extends State<MesCommandes2> {
     }
   }
 
+  String? estadoEncomenda;
+
   List? listEncomendaProd;
   Future<List<dynamic>> fetchEncomendaProd() async {
     final response = await http.get(
@@ -214,6 +216,14 @@ class _MesCommandes2State extends State<MesCommandes2> {
           body: FutureBuilder(
             future: fetchEncomendasEncomenda(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (listEncomendasEncomendas![0]['estado_encomenda'] == 1) {
+                estadoEncomenda = 'En préparation';
+              } else if (listEncomendasEncomendas![0]['estado_encomenda'] ==
+                  2) {
+                estadoEncomenda = 'Envoyé / Prêt à Levanter';
+              } else {
+                estadoEncomenda = 'Livré';
+              }
               return ListView(
                 shrinkWrap: true,
                 children: [
@@ -304,34 +314,19 @@ class _MesCommandes2State extends State<MesCommandes2> {
                                   fontWeight: FontWeight.w600,
                                 )),
                           ),
-                          if (listEncomendasEncomendas?[0]['envio'] ==
-                              'LIVRAISON À DOMICILE (2,50€)')
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                              child: Text('LIVRAISON À DOMICILE ',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(45, 61, 75, 1),
-                                    fontFamily: 'Poppins',
-                                    package: 'awesome_package',
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                            ),
-                          if (listEncomendasEncomendas?[0]['envio'] !=
-                              'LIVRAISON À DOMICILE (2,50€)')
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                              child: Text('RAMASSER AU RESTAURANT ',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(45, 61, 75, 1),
-                                    fontFamily: 'Poppins',
-                                    package: 'awesome_package',
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                            ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                            child:
+                                Text('${listEncomendasEncomendas?[0]['envio']}',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(45, 61, 75, 1),
+                                      fontFamily: 'Poppins',
+                                      package: 'awesome_package',
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w400,
+                                    )),
+                          ),
                         ],
                       ),
                       Row(
@@ -434,7 +429,7 @@ class _MesCommandes2State extends State<MesCommandes2> {
                           Padding(
                             padding:
                                 const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                            child: Text(' LIVRÉ ',
+                            child: Text('${estadoEncomenda}',
                                 style: TextStyle(
                                   color: Color.fromRGBO(45, 61, 75, 1),
                                   fontFamily: 'Poppins',

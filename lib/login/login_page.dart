@@ -21,6 +21,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginPage extends StatefulWidget {
   final FacebookLogin plugin;
@@ -559,6 +560,93 @@ class _LoginPageState extends State<LoginPage> {
                         signInFaceBook();
                       });
                     }),
+                    if (tipooo == 'iOS')
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
+                        child: Container(
+                          height: 40,
+                          child: SignInWithAppleButton(
+                            onPressed: () async {
+                              /*if (!await SignInWithApple.isAvailable()) {*/
+                              final credential =
+                                  await SignInWithApple.getAppleIDCredential(
+                                scopes: [
+                                  AppleIDAuthorizationScopes.email,
+                                  AppleIDAuthorizationScopes.fullName,
+                                ],
+                              );
+                              Future signInApple() async {
+                                signInJaRegistado(String mail) async {
+                                  SharedPreferences sharedPreferences =
+                                      await SharedPreferences.getInstance();
+                                  var response = await http.get(Uri.parse(
+                                      '${ApiDevLafiducia}/verifica-email/${mail}/'));
+
+                                  if (response.statusCode == 200) {
+                                    final jsonResponse =
+                                        json.decode(response.body.toString());
+                                    if (jsonResponse != null) {
+                                      save('token', jsonResponse['token']);
+
+                                      var prefs =
+                                          await SharedPreferences.getInstance();
+                                      prefs.setString(
+                                          'token', jsonResponse['token']);
+
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => Menu(),
+                                        ),
+                                      );
+                                    }
+                                  } else if (response.statusCode == 400) {
+                                    String data = "$credential";
+                                    final dateList = data.split(",");
+
+                                    String nomeApple =
+                                        dateList[1] + dateList[2];
+                                    String mailApple = dateList[3];
+                                    /*Future.delayed(Duration(milliseconds: 800),
+                                        () {*/
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => Confirm(
+                                          mail: mailApple,
+                                          nome: nomeApple,
+                                          tipoRegisto: 1.toString(),
+                                          registoGoogleFace: 'Apple',
+                                        ),
+                                      ),
+                                    );
+                                    /* });*/
+                                  }
+                                }
+
+                                String data = "$credential";
+                                final dateList = data.split(",");
+
+                                String nomeApple = dateList[1] + dateList[2];
+                                String mailApple = dateList[3];
+
+                                signInJaRegistado(mailApple);
+                              }
+
+                              signInApple();
+
+                              // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                              // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                              /*} else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialogVersionIos(context),
+                                );
+                              }*/
+                            },
+                          ),
+                        ),
+                      ),
                   ],
                 ),
                 Padding(
@@ -893,6 +981,66 @@ class _LoginPageState extends State<LoginPage> {
         );
       }
     }
+  }
+
+  Widget _buildPopupDialogVersionIos(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: new AlertDialog(
+        actions: <Widget>[
+          SizedBox(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 60,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                          "Cet appareil n'est pas disponible pour la connexion Apple.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(181, 142, 0, 1),
+                            fontFamily: 'Poppins',
+                            package: 'awesome_package',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Réessayer",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                package: 'awesome_package',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 16)),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromRGBO(181, 142, 0, 0.9)),
+                            side: MaterialStateProperty.all(BorderSide(
+                                color: Color.fromRGBO(181, 142, 0, 0.9),
+                                width: 0.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ],
+                  ),
+                ],
+              ))
+        ],
+      ),
+    );
   }
 
   Widget _buildPopupDialogMail(BuildContext context) {

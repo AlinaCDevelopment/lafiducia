@@ -77,7 +77,9 @@ class _AtualizarState extends State<Atualizar> {
                         ),
                         OutlinedButton(
                           onPressed: () {
-                            StoreRedirect.redirect();
+                            StoreRedirect.redirect(
+                                androidAppId: "lu.lafiducia.la_fiducia",
+                                iOSAppId: "1598380098");
                           },
                           child: const Text("Update",
                               style: TextStyle(

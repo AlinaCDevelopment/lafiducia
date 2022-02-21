@@ -15,8 +15,6 @@ import 'package:la_fiducia/login/login_page.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 
 class Cart extends StatefulWidget {
-
-
   @override
   _CartState createState() => _CartState();
 }
@@ -146,6 +144,39 @@ class _CartState extends State<Cart> {
     }
   }
 
+  List? listHora;
+  Future<List<dynamic>> fetchHora() async {
+    final response =
+        await http.get(Uri.parse('${ApiDevLafiducia}/horas-encomendas'));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      return listHora = json.decode(response.body);
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      return listHora = [
+        "00:00",
+        "18:00",
+        "18:15",
+        "18:30",
+        "18:45",
+        "19:00",
+        "19:15",
+        "19:30",
+        "19:45",
+        "20:00",
+        "20:15",
+        "20:30",
+        "20:45",
+        "21:00",
+        "21:15",
+        "21:30"
+      ];
+    }
+  }
+
   var idUnico;
   List<Map<dynamic, dynamic>> listUnico = [];
   var retrievedName;
@@ -225,11 +256,9 @@ class _CartState extends State<Cart> {
                   child: IconButton(
                     icon: Image.asset('assets/next.png'),
                     onPressed: () {
-                 
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => Menu()),
-                            (Route<dynamic> route) => false);
-                      
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => Menu()),
+                          (Route<dynamic> route) => false);
                     },
                   ),
                 );
@@ -683,121 +712,151 @@ class _CartState extends State<Cart> {
                     }),
               ]),
           bottomNavigationBar: FutureBuilder(
-              future: fetchTotalProdIngCarrinho(),
+              future: fetchHora(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 1,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          color: Color.fromRGBO(45, 61, 75, 1),
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width * 1,
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.45,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)} €"
-                                      .toString(),
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    package: 'awesome_package',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20.0,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.1,
-                                alignment: Alignment.center,
-                                child: Container(
-                                    height: 20,
-                                    child: VerticalDivider(
-                                      thickness: 2,
-                                      color: Colors.white,
-                                    )),
-                              ),
-                              FutureBuilder(
-                                  future: fetchProdCarrinho(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snapshot) {
-                                    return Container(
+                return FutureBuilder(
+                    future: fetchTotalProdIngCarrinho(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                color: Color.fromRGBO(45, 61, 75, 1),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.08,
+                                width: MediaQuery.of(context).size.width * 1,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.45,
                                       alignment: Alignment.center,
-                                      child: OutlinedButton(
-                                        onPressed: () {
-                                          if (token != '') {
-                                            if (listProdutosCarrinho?.length !=
-                                                0) {
-                                              idEncomenda =
-                                                  (listProdutosCarrinho?[index]
-                                                              ['id'] ??
-                                                          0)
-                                                      .toString();
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (_) => CheckOut(
-                                                    totalCarrinho:
-                                                        "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)}"
-                                                            .toString(),
-                                                    idEncomenda:
-                                                        idEncomenda.toString(),
-                                                    idLocalidade: parts2?[0]
-                                                            ['localidade'] ??
-                                                        0,
-                                                  ),
-                                                ),
-                                              );
-                                            } else {
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext
-                                                        context) =>
-                                                    _buildPopupDialogCarroVazio(
-                                                        context),
-                                              );
-                                            }
-                                          } else {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  _buildPopupDialogNotLogIn(
-                                                      context),
-                                            );
-                                          }
-                                        },
-                                        child: const Text('CONTINUER',
-                                            style: TextStyle(
-                                                fontFamily: 'Poppins',
-                                                package: 'awesome_package',
-                                                fontWeight: FontWeight.w400,
-                                                color: Colors.white,
-                                                fontSize: 16)),
-                                        style: ButtonStyle(
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                          )),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                                  const Color.fromRGBO(
-                                                      181, 142, 0, 0.9)),
+                                      child: Text(
+                                        "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)} €"
+                                            .toString(),
+                                        style: const TextStyle(
+                                          fontFamily: 'Poppins',
+                                          package: 'awesome_package',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0,
+                                          color: Colors.white,
                                         ),
+                                        textAlign: TextAlign.left,
                                       ),
-                                    );
-                                  })
-                            ],
-                          ));
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
+                                      alignment: Alignment.center,
+                                      child: Container(
+                                          height: 20,
+                                          child: VerticalDivider(
+                                            thickness: 2,
+                                            color: Colors.white,
+                                          )),
+                                    ),
+                                    FutureBuilder(
+                                        future: fetchProdCarrinho(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          return Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.45,
+                                            alignment: Alignment.center,
+                                            child: OutlinedButton(
+                                              onPressed: () {
+                                                if (token != '') {
+                                                  if (listHora?[0] != "00:00") {
+                                                    if (listProdutosCarrinho
+                                                            ?.length !=
+                                                        0) {
+                                                      idEncomenda =
+                                                          (listProdutosCarrinho?[
+                                                                          index]
+                                                                      ['id'] ??
+                                                                  0)
+                                                              .toString();
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (_) =>
+                                                              CheckOut(
+                                                            totalCarrinho:
+                                                                "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)}"
+                                                                    .toString(),
+                                                            idEncomenda:
+                                                                idEncomenda
+                                                                    .toString(),
+                                                            idLocalidade: parts2?[
+                                                                        0][
+                                                                    'localidade'] ??
+                                                                0,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            _buildPopupDialogCarroVazio(
+                                                                context),
+                                                      );
+                                                    }
+                                                  } else {
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          _buildPopupDialogSemHoras(
+                                                              context),
+                                                    );
+                                                  }
+                                                } else {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        _buildPopupDialogNotLogIn(
+                                                            context),
+                                                  );
+                                                }
+                                              },
+                                              child: const Text('CONTINUER',
+                                                  style: TextStyle(
+                                                      fontFamily: 'Poppins',
+                                                      package:
+                                                          'awesome_package',
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.white,
+                                                      fontSize: 16)),
+                                              style: ButtonStyle(
+                                                shape:
+                                                    MaterialStateProperty.all(
+                                                        RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          4.0),
+                                                )),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                            Color>(
+                                                        const Color.fromRGBO(
+                                                            181, 142, 0, 0.9)),
+                                              ),
+                                            ),
+                                          );
+                                        })
+                                  ],
+                                ));
+                          });
+                      return SizedBox();
                     });
-                return SizedBox();
               }),
         ));
   }
@@ -844,6 +903,68 @@ class _CartState extends State<Cart> {
                           );
                         },
                         child: const Text("Connexion",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                package: 'awesome_package',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 16)),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromRGBO(181, 142, 0, 0.9)),
+                            side: MaterialStateProperty.all(BorderSide(
+                                color: Color.fromRGBO(181, 142, 0, 0.9),
+                                width: 0.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ],
+                  ),
+                ],
+              ))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPopupDialogSemHoras(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: new AlertDialog(
+        actions: <Widget>[
+          SizedBox(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 60,
+                  ),
+                  Column(
+                    children: [
+                      Text("Nous sommes actuellement fermés, revenez demain.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(181, 142, 0, 1),
+                            fontFamily: 'Poppins',
+                            package: 'awesome_package',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Menu()),
+                          );
+                        },
+                        child: const Text("Retourner",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 package: 'awesome_package',
