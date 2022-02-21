@@ -228,7 +228,7 @@ class _LoadingState extends State<Loading> {
               );
             });
           } else if (identifier == 'Android') {
-            if (13.1 < VERSIONANDOID) {
+            if (13.4 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -240,7 +240,7 @@ class _LoadingState extends State<Loading> {
               });
             }
           } else if (identifier == 'iOS') {
-            if (13.1 < VERSIONIOS) {
+            if (13.4 < VERSIONIOS) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
