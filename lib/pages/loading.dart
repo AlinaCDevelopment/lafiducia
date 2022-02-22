@@ -31,7 +31,7 @@ class _LoadingState extends State<Loading> {
 
   void ecraDeMabutencao() async {
     WorldTime instance = WorldTime();
-    await Future.delayed(const Duration(milliseconds: 1500), () {});
+    await Future.delayed(const Duration(milliseconds: 2000), () {});
 
     Navigator.pushReplacementNamed(
       context,
@@ -63,7 +63,7 @@ class _LoadingState extends State<Loading> {
     }
   }
 
-  List listEstadoFolga = [];
+  /*List listEstadoFolga = [];
   var FechadoFolga;
   Future<List<dynamic>> fetchFolga() async {
     final response =
@@ -85,7 +85,7 @@ class _LoadingState extends State<Loading> {
       });
       throw Exception('Failed to load album');
     }
-  }
+  }*/
 
   String identifier = '';
   Future<void> _deviceDetails() async {
@@ -169,7 +169,7 @@ class _LoadingState extends State<Loading> {
   void initState() {
     fetchEstado();
     fetchFerias();
-    fetchFolga();
+    /*fetchFolga();*/
     super.initState();
   }
 
@@ -209,38 +209,8 @@ class _LoadingState extends State<Loading> {
     Future.delayed(const Duration(milliseconds: 20), () {
       if (i < 1) {
         if (AbertaFechada == 200) {
-          i++;
-          setupWorldTime();
-          if (FechadoFerias == 400) {
-            Timer.run(() {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    _buildPopupDialogFerias(context),
-              );
-            });
-          } else if (FechadoFolga == 400) {
-            Timer.run(() {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) =>
-                    _buildPopupDialogFolga(context),
-              );
-            });
-          } else if (identifier == 'Android') {
-            if (13.4 < VERSIONANDOID) {
-              Timer.run(() {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => Atualizar(),
-                  ),
-                  (route) => false,
-                );
-              });
-            }
-          } else if (identifier == 'iOS') {
-            if (13.4 < VERSIONIOS) {
+          if (identifier == 'Android') {
+            if (13.5 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -252,9 +222,41 @@ class _LoadingState extends State<Loading> {
               });
             }
           }
-        } else if (AbertaFechada == 400) {
+          if (identifier == 'iOS') {
+            if (13.5 < VERSIONIOS) {
+              Timer.run(() {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => Atualizar(),
+                  ),
+                  (route) => false,
+                );
+              });
+            }
+          }
+          if (FechadoFerias == 400) {
+            Future.delayed(const Duration(milliseconds: 5000), () {});
+            showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  _buildPopupDialogFerias(context),
+            );
+          }
+          /*if (FechadoFolga == 400) {
+            Timer.run(() {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) =>
+                    _buildPopupDialogFolga(context),
+              );
+            });
+          }*/
+          setupWorldTime();
           i++;
+        } else if (AbertaFechada == 400) {
           ecraDeMabutencao();
+          i++;
         }
       }
     });
@@ -306,7 +308,7 @@ class _LoadingState extends State<Loading> {
                   child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
-                        'COPYRIGHT 2021 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
+                        'COPYRIGHT 2022 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 10.0,
@@ -333,7 +335,7 @@ class _LoadingState extends State<Loading> {
                   ),
                   Column(
                     children: [
-                      Text("Nous sommes fermés jusqu'au",
+                      Text("Nous sommes fermés",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color.fromRGBO(181, 142, 0, 1),

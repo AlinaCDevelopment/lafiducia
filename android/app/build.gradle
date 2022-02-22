@@ -55,8 +55,8 @@ android {
         applicationId "lu.lafiducia.la_fiducia"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 20
-        versionName "13.4"
+        versionCode 21
+        versionName "13.5"
     }
 
 

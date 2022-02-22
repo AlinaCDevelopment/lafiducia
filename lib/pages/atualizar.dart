@@ -53,8 +53,8 @@ class _AtualizarState extends State<Atualizar> {
             padding: const EdgeInsets.only(top: 250.0, left: 60, right: 60),
             child: Center(
               child: SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                height: MediaQuery.of(context).size.height / 7.5,
+                height: MediaQuery.of(context).size.height / 5,
+                width: MediaQuery.of(context).size.width / 1.6,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: DecoratedBox(
@@ -62,39 +62,45 @@ class _AtualizarState extends State<Atualizar> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 16.0),
+                          padding: const EdgeInsets.only(
+                              top: 16.0, left: 30.0, right: 30.0),
                           child: Text("Mettre à jour l'application",
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Color.fromRGBO(45, 61, 75, 1),
                                 fontFamily: 'Poppins',
                                 package: 'awesome_package',
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500,
                               )),
                         ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 64,
-                        ),
-                        OutlinedButton(
-                          onPressed: () {
-                            StoreRedirect.redirect(
-                                androidAppId: "lu.lafiducia.la_fiducia",
-                                iOSAppId: "1598380098");
-                          },
-                          child: const Text("Update",
-                              style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  package: 'awesome_package',
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.white,
-                                  fontSize: 16)),
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromRGBO(181, 142, 0, 0.9)),
-                              side: MaterialStateProperty.all(BorderSide(
-                                  color: Color.fromRGBO(181, 142, 0, 0.9),
-                                  width: 0.0,
-                                  style: BorderStyle.solid))),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 25.0),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 4,
+                            child: OutlinedButton(
+                              onPressed: () {
+                                StoreRedirect.redirect(
+                                    androidAppId: "lu.lafiducia.la_fiducia",
+                                    iOSAppId: "1598380098");
+                              },
+                              child: const Text("Update",
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      package: 'awesome_package',
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white,
+                                      fontSize: 15)),
+                              style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<
+                                          Color>(
+                                      const Color.fromRGBO(181, 142, 0, 0.9)),
+                                  side: MaterialStateProperty.all(BorderSide(
+                                      color: Color.fromRGBO(181, 142, 0, 0.9),
+                                      width: 0.0,
+                                      style: BorderStyle.solid))),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -108,7 +114,7 @@ class _AtualizarState extends State<Atualizar> {
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  'COPYRIGHT 2021 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
+                  'COPYRIGHT 2022 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10.0,
