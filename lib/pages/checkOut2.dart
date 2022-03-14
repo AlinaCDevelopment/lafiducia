@@ -1614,7 +1614,7 @@ class _CheckOut2State extends State<CheckOut2> {
                             ),
                           ),
                         ),
-                        Padding(
+                        /*Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Container(
                               height: 200,
@@ -1630,6 +1630,38 @@ class _CheckOut2State extends State<CheckOut2> {
                                 padding: EdgeInsets.only(left: 8.0, bottom: 0),
                                 child: TextFormField(
                                   maxLines: null,
+                                  controller: comentariosController,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText:
+                                        "insérez ici une note concernant votre commande",
+                                    hintStyle: TextStyle(
+                                      color: Color.fromRGBO(190, 190, 190, 1),
+                                      fontFamily: 'Poppins',
+                                      package: 'awesome_package',
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                        ),*/
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                              height: 300,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: Color.fromRGBO(181, 142, 0, 1),
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 4, left: 8),
+                                child: TextFormField(
                                   controller: comentariosController,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
