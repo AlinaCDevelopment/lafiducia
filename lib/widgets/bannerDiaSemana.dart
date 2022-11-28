@@ -19,13 +19,13 @@ class BuildBanner extends StatefulWidget {
 class _BuildBannerState extends State<BuildBanner> {
   @override
   void initState() {
-    super.initState();
     fetchPratodia();
     fetchPratoSemana();
+    super.initState();
   }
 
-  List? listPatoDia;
-  Future<List<dynamic>> fetchPratodia() async {
+  Map? listPatoDia;
+  Future<Map<String, dynamic>> fetchPratodia() async {
     final response = await http.get(Uri.parse('${ApiDevLafiducia}/prato-dia/'));
 
     if (response.statusCode == 200) {
@@ -39,8 +39,8 @@ class _BuildBannerState extends State<BuildBanner> {
     }
   }
 
-  List? listPratoSemana;
-  Future<List<dynamic>> fetchPratoSemana() async {
+  Map? listPratoSemana;
+  Future<Map<String, dynamic>> fetchPratoSemana() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/sugestao-semana/'));
 
@@ -57,11 +57,11 @@ class _BuildBannerState extends State<BuildBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<dynamic>>(
+    return FutureBuilder<Map<String, dynamic>>(
         future: fetchPratodia(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (listPatoDia != null || listPratoSemana != null) {
-            return FutureBuilder<List<dynamic>>(
+            return FutureBuilder<Map<String, dynamic>>(
                 future: fetchPratoSemana(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return Padding(

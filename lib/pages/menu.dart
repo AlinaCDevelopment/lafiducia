@@ -28,6 +28,7 @@ import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:uuid/uuid.dart';
+import 'package:la_fiducia/pages/sugestDiaSemana.dart';
 
 String finalEmail = '';
 
@@ -66,8 +67,8 @@ class _MenuState extends State<Menu> {
   String? _email;
   String? _imageUrl;
 
-  late List listProdutos;
-  Future<List<dynamic>> fetchCategoria() async {
+  Map? listProdutos;
+  Future<Map<String, dynamic>> fetchCategoria() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/produtos-categorias/${24}'));
 
@@ -87,7 +88,6 @@ class _MenuState extends State<Menu> {
     getToken();
     fetchData();
     fetchBanners();
-    fetchProdCarrinho();
     fetchPratoSemana();
     fetchPratodia();
     fetchFolga();
@@ -95,6 +95,7 @@ class _MenuState extends State<Menu> {
     super.initState();
     _getSdkVersion();
     _updateLoginInfo();
+    _deviceDetails();
   }
 
   /*loginStatus() async {
@@ -168,8 +169,8 @@ class _MenuState extends State<Menu> {
     }
   }
 
-  late List listResponse;
-  Future<List<dynamic>> fetchData() async {
+  Map? listResponse;
+  Future<Map<String, dynamic>> fetchData() async {
     http.Response response;
     response = await http.get(Uri.parse('${ApiDevLafiducia}/categorias'));
     /*if (response.statusCode == 200) {
@@ -180,8 +181,8 @@ class _MenuState extends State<Menu> {
     return listResponse = json.decode(response.body);
   }
 
-  late List listSugest;
-  Future<List<dynamic>> fetchBanners() async {
+  Map? listSugest;
+  Future<Map<String, dynamic>> fetchBanners() async {
     http.Response response;
     response = await http.get(Uri.parse('${ApiDevLafiducia}/sugestoes'));
     /*if (response.statusCode == 200) {
@@ -192,8 +193,8 @@ class _MenuState extends State<Menu> {
     return listSugest = json.decode(response.body);
   }
 
-  List? listPatoDia;
-  Future<List<dynamic>> fetchPratodia() async {
+  Map? listPatoDia;
+  Future<Map<String, dynamic>> fetchPratodia() async {
     final response = await http.get(Uri.parse('${ApiDevLafiducia}/prato-dia/'));
 
     if (response.statusCode == 200) {
@@ -207,8 +208,8 @@ class _MenuState extends State<Menu> {
     }
   }
 
-  List? listPratoSemana;
-  Future<List<dynamic>> fetchPratoSemana() async {
+  Map? listPratoSemana;
+  Future<Map<String, dynamic>> fetchPratoSemana() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/sugestao-semana/'));
 
@@ -223,9 +224,9 @@ class _MenuState extends State<Menu> {
     }
   }
 
-  List listEstadoFerias = [];
+  Map? listEstadoFerias;
   var FechadoFerias;
-  Future<List<dynamic>> fetchFerias() async {
+  Future<Map<String, dynamic>> fetchFerias() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -247,9 +248,9 @@ class _MenuState extends State<Menu> {
     }
   }
 
-  List listEstadoFolga = [];
+  Map? listEstadoFolga;
   var FechadoFolga;
-  Future<List<dynamic>> fetchFolga() async {
+  Future<Map<String, dynamic>> fetchFolga() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -271,8 +272,8 @@ class _MenuState extends State<Menu> {
     }
   }
 
-  List<Map<dynamic, dynamic>> lists = [];
-  List<Map<dynamic, dynamic>> lists2 = [];
+  Map<dynamic, dynamic>? lists;
+  Map<dynamic, dynamic>? lists2;
 
   var retrievedName;
   String identifier = '';
@@ -373,92 +374,87 @@ class _MenuState extends State<Menu> {
             actions: <Widget>[
               Column(
                 children: [
-                  if (FechadoFerias == 200 && FechadoFolga == 200)
-                    FutureBuilder(
-                        future: fetchProdCarrinho(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (teste == 0) {
-                            _deviceDetails();
+                  /*if (FechadoFerias == 200 && FechadoFolga == 200)*/
+                  FutureBuilder(
+                      future: fetchProdCarrinho(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (teste == 0) {
+                          _deviceDetails();
 
-                            teste++;
-                          }
-
-                          if ((listProdutosCarrinho?.length ?? 0) != 0) {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 12.0, top: 30.0),
-                              child: GestureDetector(
-                                child: Stack(
-                                  alignment: Alignment.topCenter,
-                                  children: <Widget>[
-                                    if ((listProdutosCarrinho?.length ?? 0) ==
-                                        0)
-                                      Image.asset(
-                                        "assets/carroInativo.png",
-                                        width: 40,
-                                      ),
-                                    if ((listProdutosCarrinho?.length ?? 0) > 0)
-                                      Image.asset(
-                                        "assets/carroAtivo.png",
-                                        width: 40,
-                                      ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 35.0),
-                                      child: CircleAvatar(
-                                        radius: 8.0,
-                                        backgroundColor: Colors.red,
-                                        foregroundColor: Colors.white,
-                                        child: Text(
-                                          (listProdutosCarrinho?.length ?? 0)
-                                              .toString(),
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 12.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (listProdutosCarrinho!.isNotEmpty)
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Cart(),
-                                      ),
-                                    );
-                                },
-                              ),
-                            );
-                          } else {
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 12.0, top: 30.0),
-                              child: GestureDetector(
-                                child: Stack(
-                                  alignment: Alignment.topCenter,
-                                  children: <Widget>[
+                          teste++;
+                        }
+                        if ((listProdutosCarrinho?.length ?? 0) != 0) {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(right: 12.0, top: 30.0),
+                            child: GestureDetector(
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  if ((listProdutosCarrinho?.length ?? 0) == 0)
                                     Image.asset(
                                       "assets/carroInativo.png",
                                       width: 40,
                                     ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  if (listProdutosCarrinho!.isNotEmpty)
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) => Cart(),
+                                  if ((listProdutosCarrinho?.length ?? 0) > 0)
+                                    Image.asset(
+                                      "assets/carroAtivo.png",
+                                      width: 40,
+                                    ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 35.0),
+                                    child: CircleAvatar(
+                                      radius: 8.0,
+                                      backgroundColor: Colors.red,
+                                      foregroundColor: Colors.white,
+                                      child: Text(
+                                        (listProdutosCarrinho?.length ?? 0)
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.0,
+                                        ),
                                       ),
-                                    );
-                                },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            );
-                          }
-                        }),
+                              onTap: () {
+                                if (listProdutosCarrinho!.isNotEmpty)
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Cart(),
+                                    ),
+                                  );
+                              },
+                            ),
+                          );
+                        } else {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(right: 12.0, top: 30.0),
+                            child: GestureDetector(
+                              child: Stack(
+                                alignment: Alignment.topCenter,
+                                children: <Widget>[
+                                  Image.asset(
+                                    "assets/carroInativo.png",
+                                    width: 40,
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                if (listProdutosCarrinho!.isNotEmpty)
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Cart(),
+                                    ),
+                                  );
+                              },
+                            ),
+                          );
+                        }
+                      }),
                 ],
               ),
               /* PUSH NOTIFICATIONS */
@@ -1241,7 +1237,249 @@ class _MenuState extends State<Menu> {
                 height: MediaQuery.of(context).size.width * 0.9,
                 child: Bolinhas(),
               ),
-              BuildBanner(),
+              /* BuildBanner(),*/
+              FutureBuilder<Map<String, dynamic>>(
+                  future: fetchPratodia(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (listPatoDia != null || listPratoSemana != null) {
+                      return FutureBuilder<Map<String, dynamic>>(
+                          future: fetchPratoSemana(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  side: BorderSide(
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => SugestDiaSemana(),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  color: Colors.white,
+                                  height:
+                                      MediaQuery.of(context).size.height / 5.5,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 15, bottom: 15, left: 2, right: 2),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(12.0),
+                                        topRight: Radius.circular(12.0),
+                                        bottomLeft: Radius.circular(12.0),
+                                        bottomRight: Radius.circular(12.0),
+                                      ),
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/bannerPrincipal.png"),
+                                              fit: BoxFit.fitHeight,
+                                            ),
+                                          ),
+                                          child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 30, left: 20),
+                                              child: Row(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 0.6),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          8)),
+                                                          child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                3.5,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                35,
+                                                            color: Colors.white,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      top: 4.0),
+                                                              child: Text(
+                                                                'PLAT DU JUR',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    package:
+                                                                        'awesome_package',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontSize:
+                                                                        13,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            181,
+                                                                            142,
+                                                                            0,
+                                                                            1)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              80,
+                                                        ),
+                                                        ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          8)),
+                                                          child: Container(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width /
+                                                                2.5,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height /
+                                                                35,
+                                                            color: Colors.white,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      top: 4.0),
+                                                              child: Text(
+                                                                'PLAT DE LA SEMAINE',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    package:
+                                                                        'awesome_package',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    fontSize:
+                                                                        13,
+                                                                    color: Color
+                                                                        .fromRGBO(
+                                                                            181,
+                                                                            142,
+                                                                            0,
+                                                                            1)),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              2.38,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              Text(
+                                                                'VOIR PLUS',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style: const TextStyle(
+                                                                    fontFamily:
+                                                                        'Poppins',
+                                                                    package:
+                                                                        'awesome_package',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        left:
+                                                                            4),
+                                                                child:
+                                                                    IconButton(
+                                                                  icon: Image
+                                                                      .asset(
+                                                                    'assets/nextBranco.png',
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (_) =>
+                                                                                SugestDiaSemana(),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      )),
+                                                ],
+                                              ))),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    } else {
+                      return SizedBox();
+                    }
+                  }),
               Container(
                 height: MediaQuery.of(context).size.height / 1.5,
                 child: Buildbotao(),

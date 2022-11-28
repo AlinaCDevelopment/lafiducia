@@ -29,6 +29,7 @@ import 'dart:async';
 
 class Confirm extends StatefulWidget {
   final String mail;
+  final String codigoApple;
   final String nome;
   final String tipoRegisto;
   final String registoGoogleFace;
@@ -36,6 +37,7 @@ class Confirm extends StatefulWidget {
   const Confirm({
     Key? key,
     required this.mail,
+    required this.codigoApple,
     required this.nome,
     required this.tipoRegisto,
     required this.registoGoogleFace,
@@ -662,6 +664,7 @@ class _ConfirmState extends State<Confirm> {
                                   Register(
                                     nomeGoogle,
                                     mailxyz,
+                                    widget.codigoApple,
                                     moradaController.text,
                                     codigoPostalController.text,
                                     _myCity,
@@ -703,6 +706,7 @@ class _ConfirmState extends State<Confirm> {
   Register(
     String nome,
     email,
+    appleCode,
     morada,
     codigoPostal,
     _myCity,
@@ -715,6 +719,7 @@ class _ConfirmState extends State<Confirm> {
     Map data = {
       'nome': nome,
       'email': email,
+      'appleId': appleCode,
       'morada': morada,
       'cod_postal': codigoPostal,
       'localidade': _myCity,

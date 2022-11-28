@@ -210,7 +210,7 @@ class _LoadingState extends State<Loading> {
       if (i < 1) {
         if (AbertaFechada == 200) {
           if (identifier == 'Android') {
-            if (13.5 < VERSIONANDOID) {
+            if (13.6 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -223,7 +223,7 @@ class _LoadingState extends State<Loading> {
             }
           }
           if (identifier == 'iOS') {
-            if (13.5 < VERSIONIOS) {
+            if (13.6 < VERSIONIOS) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,

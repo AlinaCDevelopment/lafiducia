@@ -577,11 +577,11 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               );
                               Future signInApple() async {
-                                signInJaRegistado(String mail) async {
+                                signInJaRegistado(String appleId) async {
                                   SharedPreferences sharedPreferences =
                                       await SharedPreferences.getInstance();
                                   var response = await http.get(Uri.parse(
-                                      '${ApiDevLafiducia}/verifica-email/${mail}/'));
+                                      '${ApiDevLafiducia}/verifica-appleId/${appleId}/'));
 
                                   if (response.statusCode == 200) {
                                     final jsonResponse =
@@ -607,12 +607,17 @@ class _LoginPageState extends State<LoginPage> {
                                     String nomeApple =
                                         dateList[1] + dateList[2];
                                     String mailApple = dateList[3];
+
+                                    String codApple = dateList[0];
+                                    final codAppleFinal = codApple.split("(");
+
                                     /*Future.delayed(Duration(milliseconds: 800),
                                         () {*/
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) => Confirm(
                                           mail: mailApple,
+                                          codigoApple: codAppleFinal[1],
                                           nome: nomeApple,
                                           tipoRegisto: 1.toString(),
                                           registoGoogleFace: 'Apple',
@@ -626,10 +631,13 @@ class _LoginPageState extends State<LoginPage> {
                                 String data = "$credential";
                                 final dateList = data.split(",");
 
+                                String codApple = dateList[0];
+                                final codAppleFinal = codApple.split("(");
+
                                 String nomeApple = dateList[1] + dateList[2];
                                 String mailApple = dateList[3];
 
-                                signInJaRegistado(mailApple);
+                                signInJaRegistado(codAppleFinal[1]);
                               }
 
                               signInApple();
@@ -754,6 +762,7 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(
             builder: (context) => Confirm(
               mail: user!.email.toString(),
+              codigoApple: '00000000',
               nome: user.displayName.toString(),
               tipoRegisto: 1.toString(),
               registoGoogleFace: 'Google',
@@ -803,6 +812,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(
               builder: (context) => Confirm(
                 mail: mailez,
+                codigoApple: '00000000',
                 nome: _profile!.name.toString(),
                 tipoRegisto: 2.toString(),
                 registoGoogleFace: 'Facebook',

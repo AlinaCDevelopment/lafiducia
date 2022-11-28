@@ -1861,7 +1861,7 @@ class _CheckOutState extends State<CheckOut> {
                   Column(
                     children: [
                       Text(
-                          'A sua localidade não é compativel com o seu valor final',
+                          'Votre emplacement n est pas compatible avec votre valeur finale',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Color.fromRGBO(181, 142, 0, 1),
@@ -1871,7 +1871,7 @@ class _CheckOutState extends State<CheckOut> {
                             fontWeight: FontWeight.w600,
                           )),
                       Text(
-                          'A sua encomenda deve ter um valor acima de ${listIDlocalidadeID?[0]['valor'].toString()}€',
+                          'Votre commande doit avoir une valeur supérieure ${listIDlocalidadeID?[0]['valor'].toString()}€',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             color: Colors.black,
