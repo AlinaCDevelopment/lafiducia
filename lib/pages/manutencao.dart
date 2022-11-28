@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 
 class Manutencao extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class Manutencao extends StatefulWidget {
 class _ManutencaoState extends State<Manutencao> {
   @override
   Widget build(BuildContext context) {
+    final now = new DateTime.now();
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -68,12 +70,12 @@ class _ManutencaoState extends State<Manutencao> {
               ],
             )),
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.all(15.0),
             child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Text(
-                  'COPYRIGHT 2021 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
+                  'COPYRIGHT ${now.year} ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 10.0,

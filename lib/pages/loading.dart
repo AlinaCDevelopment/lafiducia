@@ -210,7 +210,7 @@ class _LoadingState extends State<Loading> {
       if (i < 1) {
         if (AbertaFechada == 200) {
           if (identifier == 'Android') {
-            if (13.6 < VERSIONANDOID) {
+            if (14.04 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -223,7 +223,7 @@ class _LoadingState extends State<Loading> {
             }
           }
           if (identifier == 'iOS') {
-            if (13.6 < VERSIONIOS) {
+            if (14.04 < VERSIONIOS) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -260,7 +260,7 @@ class _LoadingState extends State<Loading> {
         }
       }
     });
-
+    final now = new DateTime.now();
     return Scaffold(
       body: FutureBuilder(
           future: fetchEstado(),
@@ -303,12 +303,12 @@ class _LoadingState extends State<Loading> {
                             color: Color.fromRGBO(114, 20, 17, 1)),
                       )),
                 ),*/
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Text(
-                        'COPYRIGHT 2022 ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
+                        'COPYRIGHT ${now.year} ALBINET LDA. TODOS OS DIREITOS RESERVADOS',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 10.0,

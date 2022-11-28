@@ -1302,18 +1302,18 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          textColor: Theme.of(context).primaryColor,
+          // textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
-        new FlatButton(
+        new TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          textColor: Theme.of(context).primaryColor,
+          //textColor: Theme.of(context).primaryColor,
           child: const Text('Reenviar email'),
         ),
       ],
@@ -1331,11 +1331,11 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new TextButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          textColor: Theme.of(context).primaryColor,
+          //textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
       ],

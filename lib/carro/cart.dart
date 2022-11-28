@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/rendering.dart';
 import 'package:la_fiducia/pages/menu.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:http/http.dart' as http;
@@ -50,7 +48,27 @@ class _CartState extends State<Cart> {
   @override
   void initState() {
     getToken();
+    fetchVerificacaoMenuEstudante();
     super.initState();
+  }
+
+  var checkOpen = '';
+  List? verifica_menu_estudante_aberto;
+  Future<List<dynamic>> fetchVerificacaoMenuEstudante() async {
+    final response =
+        await http.get(Uri.parse('${ApiDevLafiducia}/bloquear-botao/'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        checkOpen = 'aberto';
+      });
+      return verifica_menu_estudante_aberto = json.decode(response.body);
+    } else {
+      setState(() {
+        checkOpen = 'fechado';
+      });
+      throw Exception('Failed to load album');
+    }
   }
 
   List? listProdutosCarrinho;
@@ -203,6 +221,10 @@ class _CartState extends State<Cart> {
 
   @override
   Widget build(BuildContext context) {
+    if (i == 0) {
+      fetchVerificacaoMenuEstudante();
+      i++;
+    }
     if (token != '') {
       String _decodeBase64(String str) {
         String output = str.replaceAll('-', '+').replaceAll('_', '/');
@@ -780,24 +802,39 @@ class _CartState extends State<Cart> {
                                                                       ['id'] ??
                                                                   0)
                                                               .toString();
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (_) =>
-                                                              CheckOut(
-                                                            totalCarrinho:
-                                                                "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)}"
-                                                                    .toString(),
-                                                            idEncomenda:
-                                                                idEncomenda
-                                                                    .toString(),
-                                                            idLocalidade: parts2?[
-                                                                        0][
-                                                                    'localidade'] ??
-                                                                0,
+                                                      if (listProdutosCarrinho![
+                                                                      index][
+                                                                  'id_subcategoria'] ==
+                                                              '100' &&
+                                                          checkOpen ==
+                                                              'fechado') {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              _buildPopupDialogMenuEstudanteForaDoras(
+                                                                  context),
+                                                        );
+                                                      } else {
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder: (_) =>
+                                                                CheckOut(
+                                                              totalCarrinho:
+                                                                  "${listTotalProdIngCarrinho?[0]['total'] ?? 0.toStringAsFixed(2)}"
+                                                                      .toString(),
+                                                              idEncomenda:
+                                                                  idEncomenda
+                                                                      .toString(),
+                                                              idLocalidade:
+                                                                  parts2?[0][
+                                                                          'localidade'] ??
+                                                                      0,
+                                                            ),
                                                           ),
-                                                        ),
-                                                      );
+                                                        );
+                                                      }
                                                     } else {
                                                       showDialog(
                                                         context: context,
@@ -855,7 +892,6 @@ class _CartState extends State<Cart> {
                                   ],
                                 ));
                           });
-                      return SizedBox();
                     });
               }),
         ));
@@ -1027,6 +1063,69 @@ class _CartState extends State<Cart> {
                           );
                         },
                         child: const Text("Ajouter des produits",
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                package: 'awesome_package',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                                fontSize: 16)),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color.fromRGBO(181, 142, 0, 0.9)),
+                            side: MaterialStateProperty.all(BorderSide(
+                                color: Color.fromRGBO(181, 142, 0, 0.9),
+                                width: 0.0,
+                                style: BorderStyle.solid))),
+                      ),
+                    ],
+                  ),
+                ],
+              ))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPopupDialogMenuEstudanteForaDoras(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: new AlertDialog(
+        actions: <Widget>[
+          SizedBox(
+              height: MediaQuery.of(context).size.height / 5,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 60,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                          'Le menu étudiant dans le panier ne peut être commandé que de 00h00 à 13h30.',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(181, 142, 0, 1),
+                            fontFamily: 'Poppins',
+                            package: 'awesome_package',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Cart()),
+                          );
+                        },
+                        child: const Text("Changer de panier",
                             style: TextStyle(
                                 fontFamily: 'Poppins',
                                 package: 'awesome_package',

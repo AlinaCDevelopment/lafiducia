@@ -78,7 +78,7 @@ class _BolinhasState extends State<Bolinhas> {
     }
   }
 
-  Map? idMain;
+  late List idMain;
   Future<Map<String, dynamic>> fetchidMain() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/contar-encomenda/${identifier}'));

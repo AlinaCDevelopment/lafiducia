@@ -154,14 +154,15 @@ class _MenuState extends State<Menu> {
   }*/
 
   List? listProdutosCarrinho;
-  Future<List<dynamic>> fetchProdCarrinho() async {
+  Future<List<dynamic>?> fetchProdCarrinho() async {
     final response = await http.get(
         Uri.parse('${ApiDevLafiducia}/produto-carrinho-temp/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return listProdutosCarrinho = json.decode(response.body);
+      // then parse the JSON.´
+      listProdutosCarrinho = json.decode(response.body);
+      return listProdutosCarrinho;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -193,8 +194,8 @@ class _MenuState extends State<Menu> {
     return listSugest = json.decode(response.body);
   }
 
-  Map? listPatoDia;
-  Future<Map<String, dynamic>> fetchPratodia() async {
+  List? listPatoDia;
+  Future<List<dynamic>> fetchPratodia() async {
     final response = await http.get(Uri.parse('${ApiDevLafiducia}/prato-dia/'));
 
     if (response.statusCode == 200) {
@@ -204,23 +205,24 @@ class _MenuState extends State<Menu> {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      return listPatoDia = json.decode(response.body);
+      throw Exception('Failed to load album');
     }
   }
 
-  Map? listPratoSemana;
-  Future<Map<String, dynamic>> fetchPratoSemana() async {
+  List? listPratoSemana;
+  Future<List<dynamic>?> fetchPratoSemana() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/sugestao-semana/'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listPratoSemana = json.decode(response.body);
+      listPratoSemana = json.decode(response.body);
+      return listPratoSemana;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      return listPatoDia = json.decode(response.body);
+      throw Exception('Failed to load album');
     }
   }
 
@@ -1238,12 +1240,13 @@ class _MenuState extends State<Menu> {
                 child: Bolinhas(),
               ),
               /* BuildBanner(),*/
-              FutureBuilder<Map<String, dynamic>>(
+
+              FutureBuilder<List<dynamic>>(
                   future: fetchPratodia(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (listPatoDia != null || listPratoSemana != null) {
-                      return FutureBuilder<Map<String, dynamic>>(
-                          future: fetchPratoSemana(),
+                      return FutureBuilder<List<dynamic>>(
+                          future: fetchPratodia(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             return Padding(

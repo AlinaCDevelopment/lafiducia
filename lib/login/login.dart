@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
           title: Text("Authentication System",
               style: TextStyle(color: Colors.white)),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 sharedPreferences.clear();
                 sharedPreferences.commit();

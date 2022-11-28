@@ -54,9 +54,9 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "lu.lafiducia.la_fiducia"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 22
-        versionName "13.6"
+        targetSdkVersion 31
+        versionCode 30
+        versionName "14.04"
     }
 
 
@@ -95,6 +95,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
+    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
     implementation group: 'com.google.android.material', name: 'material', version: '1.1.0-alpha05'
 }

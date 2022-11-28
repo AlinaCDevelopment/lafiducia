@@ -35,6 +35,8 @@ class _MenuEstudanteState extends State<MenuEstudante> {
     fetchProdCarrinho();
     _deviceDetails();
     fetchidMain();
+    fetchVerificacaoMenuEstudante();
+
     super.initState();
   }
 
@@ -103,6 +105,25 @@ class _MenuEstudanteState extends State<MenuEstudante> {
     }
   }
 
+  var checkOpen = '';
+  List? verifica_menu_estudante_aberto;
+  Future<List<dynamic>> fetchVerificacaoMenuEstudante() async {
+    final response =
+        await http.get(Uri.parse('${ApiDevLafiducia}/bloquear-botao/'));
+
+    if (response.statusCode == 200) {
+      setState(() {
+        checkOpen = 'aberto';
+      });
+      return verifica_menu_estudante_aberto = json.decode(response.body);
+    } else {
+      setState(() {
+        checkOpen = 'fechado';
+      });
+      throw Exception('Failed to load album');
+    }
+  }
+
   var teste = 0;
 
   Widget build(BuildContext context) {
@@ -132,7 +153,7 @@ class _MenuEstudanteState extends State<MenuEstudante> {
           titleSpacing: 0,
           leadingWidth: 60,
           centerTitle: true,
-          title: Text(' Menu Estudante',
+          title: Text('Menu Étudiant',
               style: TextStyle(
                 color: Color.fromRGBO(45, 61, 75, 1),
                 fontFamily: 'Poppins',
@@ -246,7 +267,7 @@ class _MenuEstudanteState extends State<MenuEstudante> {
                                                     .size
                                                     .height *
                                                 listMenuEstudante.length /
-                                                2,
+                                                1.8,
                                             child: Padding(
                                               padding: const EdgeInsets.only(
                                                   top: 30),
@@ -374,112 +395,117 @@ class _MenuEstudanteState extends State<MenuEstudante> {
                                                                               SizedBox(
                                                                                 width: MediaQuery.of(context).size.width * 0.35,
                                                                               ),
-                                                                              new SizedBox(
-                                                                                width: MediaQuery.of(context).size.width * 0.32,
-                                                                                height: MediaQuery.of(context).size.width * 0.07,
-                                                                                child: OutlinedButton(
-                                                                                  onPressed: () {
-                                                                                    verifica3(String tele) async {
-                                                                                      var response = await http.get(Uri.parse('${ApiDevLafiducia}/verifica-produto3/${tele}/'));
+                                                                              if (checkOpen == 'aberto')
+                                                                                new SizedBox(
+                                                                                  width: MediaQuery.of(context).size.width * 0.32,
+                                                                                  height: MediaQuery.of(context).size.width * 0.07,
+                                                                                  child: OutlinedButton(
+                                                                                    onPressed: () {
+                                                                                      verifica3(String tele) async {
+                                                                                        var response = await http.get(Uri.parse('${ApiDevLafiducia}/verifica-produto3/${tele}/'));
 
-                                                                                      final jsonResponse = json.decode(response.body.toString());
+                                                                                        final jsonResponse = json.decode(response.body.toString());
 
-                                                                                      if (response.statusCode == 400 || listProdutosCarrinho!.length == 0) {
-                                                                                        Future<http.Response> postProd() async {
-                                                                                          var dataProd = {
-                                                                                            "id_equipamento": identifier,
-                                                                                            "nome": listMenuEstudante[index]['titulo'].toString(),
-                                                                                            "foto": listMenuEstudante[index]['imagem'].toString(),
-                                                                                            "id_prato": listMenuEstudante[index]['id'].toString(),
-                                                                                            "preco": listMenuEstudante[index]['pvp'],
-                                                                                            "tipo_encomenda": 'APP',
-                                                                                            "id_main": (idMain?[0]['total'] + 1).toString(),
-                                                                                            "tipo_produto": 3.toString(),
-                                                                                          };
+                                                                                        if (response.statusCode == 400 || listProdutosCarrinho!.length == 0) {
+                                                                                          Future<http.Response> postProd() async {
+                                                                                            var dataProd = {
+                                                                                              "id_equipamento": identifier,
+                                                                                              "nome": listMenuEstudante[index]['titulo'].toString(),
+                                                                                              "foto": listMenuEstudante[index]['imagem'].toString(),
+                                                                                              "id_prato": listMenuEstudante[index]['id'].toString(),
+                                                                                              "preco": listMenuEstudante[index]['pvp'],
+                                                                                              "tipo_encomenda": 'APP',
+                                                                                              "id_main": (idMain?[0]['total'] + 1).toString(),
+                                                                                              "tipo_produto": 3.toString(),
+                                                                                              "id_subcategoria": '100',
+                                                                                            };
 
-                                                                                          var res = await http.post(Uri.parse('${ApiDevLafiducia}/carrinho-app/'), body: dataProd);
+                                                                                            var res = await http.post(Uri.parse('${ApiDevLafiducia}/carrinho-app/'), body: dataProd);
 
-                                                                                          return res;
-                                                                                        }
+                                                                                            return res;
+                                                                                          }
 
-                                                                                        postProd();
+                                                                                          postProd();
 
-                                                                                        Navigator.of(context).push(
-                                                                                          MaterialPageRoute(
-                                                                                            builder: (context) => Menu(),
-                                                                                          ),
-                                                                                        );
-                                                                                      } else {
-                                                                                        verifica1Ou2(String tele) async {
-                                                                                          var response = await http.get(Uri.parse('${ApiDevLafiducia}/verifica-produto1e2/${tele}/'));
+                                                                                          Navigator.of(context).push(
+                                                                                            MaterialPageRoute(
+                                                                                              builder: (context) => Menu(),
+                                                                                            ),
+                                                                                          );
+                                                                                        } else {
+                                                                                          verifica1Ou2(String tele) async {
+                                                                                            var response = await http.get(Uri.parse('${ApiDevLafiducia}/verifica-produto1e2/${tele}/'));
 
-                                                                                          final jsonResponse = json.decode(response.body.toString());
-                                                                                          if (response.statusCode == 200 || listProdutosCarrinho!.length == 0) {
-                                                                                            verificaBebidaSobremesas(String tele) async {
-                                                                                              var response1 = await http.get(Uri.parse('${ApiDevLafiducia}/sem-bebidas-sobremessas/${tele}/'));
+                                                                                            final jsonResponse = json.decode(response.body.toString());
+                                                                                            if (response.statusCode == 200 || listProdutosCarrinho!.length == 0) {
+                                                                                              verificaBebidaSobremesas(String tele) async {
+                                                                                                var response1 = await http.get(Uri.parse('${ApiDevLafiducia}/sem-bebidas-sobremessas/${tele}/'));
 
-                                                                                              if (response1.statusCode == 200) {
-                                                                                                final jsonResponse = json.decode(response1.body.toString());
-                                                                                                if (jsonResponse != null) {
-                                                                                                  Future<http.Response> postProd() async {
-                                                                                                    var dataProd = {
-                                                                                                      "id_equipamento": identifier,
-                                                                                                      "nome": listMenuEstudante[index]['titulo'].toString(),
-                                                                                                      "foto": listMenuEstudante[index]['imagem'].toString(),
-                                                                                                      "id_prato": listMenuEstudante[index]['id'].toString(),
-                                                                                                      "preco": listMenuEstudante[index]['pvp'],
-                                                                                                      "tipo_encomenda": 'APP',
-                                                                                                      "id_main": (idMain?[0]['total'] + 1).toString(),
-                                                                                                      "tipo_produto": 3.toString(),
-                                                                                                    };
+                                                                                                if (response1.statusCode == 200) {
+                                                                                                  final jsonResponse = json.decode(response1.body.toString());
+                                                                                                  if (jsonResponse != null) {
+                                                                                                    Future<http.Response> postProd() async {
+                                                                                                      var dataProd = {
+                                                                                                        "id_equipamento": identifier,
+                                                                                                        "nome": listMenuEstudante[index]['titulo'].toString(),
+                                                                                                        "foto": listMenuEstudante[index]['imagem'].toString(),
+                                                                                                        "id_prato": listMenuEstudante[index]['id'].toString(),
+                                                                                                        "preco": listMenuEstudante[index]['pvp'],
+                                                                                                        "tipo_encomenda": 'APP',
+                                                                                                        "id_main": (idMain?[0]['total'] + 1).toString(),
+                                                                                                        "tipo_produto": 3.toString(),
+                                                                                                        "id_subcategoria": '100',
+                                                                                                      };
 
-                                                                                                    var res = await http.post(Uri.parse('${ApiDevLafiducia}/carrinho-app/'), body: dataProd);
+                                                                                                      var res = await http.post(Uri.parse('${ApiDevLafiducia}/carrinho-app/'), body: dataProd);
 
-                                                                                                    return res;
+                                                                                                      return res;
+                                                                                                    }
+
+                                                                                                    postProd();
+
+                                                                                                    Navigator.of(context).push(
+                                                                                                      MaterialPageRoute(
+                                                                                                        builder: (context) => Menu(),
+                                                                                                      ),
+                                                                                                    );
                                                                                                   }
-
-                                                                                                  postProd();
-
-                                                                                                  Navigator.of(context).push(
-                                                                                                    MaterialPageRoute(
-                                                                                                      builder: (context) => Menu(),
-                                                                                                    ),
+                                                                                                } else {
+                                                                                                  showDialog(
+                                                                                                    context: context,
+                                                                                                    builder: (BuildContext context) => _buildPopupDialogMenuEstudante(context),
                                                                                                   );
                                                                                                 }
-                                                                                              } else {
-                                                                                                showDialog(
-                                                                                                  context: context,
-                                                                                                  builder: (BuildContext context) => _buildPopupDialogMenuEstudante(context),
-                                                                                                );
                                                                                               }
+
+                                                                                              verificaBebidaSobremesas(identifier);
+                                                                                            } else {
+                                                                                              showDialog(
+                                                                                                context: context,
+                                                                                                builder: (BuildContext context) => _buildPopupDialogMenuEstudante(context),
+                                                                                              );
                                                                                             }
-
-                                                                                            verificaBebidaSobremesas(identifier);
-                                                                                          } else {
-                                                                                            showDialog(
-                                                                                              context: context,
-                                                                                              builder: (BuildContext context) => _buildPopupDialogMenuEstudante(context),
-                                                                                            );
                                                                                           }
+
+                                                                                          verifica1Ou2(identifier);
                                                                                         }
-
-                                                                                        verifica1Ou2(identifier);
                                                                                       }
-                                                                                    }
 
-                                                                                    verifica3(identifier);
-                                                                                  },
-                                                                                  child: const Text('AJOUTER', style: TextStyle(fontFamily: 'Poppins', package: 'awesome_package', fontWeight: FontWeight.w400, color: Colors.white, fontSize: 15)),
-                                                                                  style: ButtonStyle(
-                                                                                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                                                                      borderRadius: BorderRadius.circular(4.0),
-                                                                                    )),
-                                                                                    backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(181, 142, 0, 0.9)),
+                                                                                      verifica3(identifier);
+                                                                                    },
+                                                                                    child: const Text('AJOUTER', style: TextStyle(fontFamily: 'Poppins', package: 'awesome_package', fontWeight: FontWeight.w400, color: Colors.white, fontSize: 15)),
+                                                                                    style: ButtonStyle(
+                                                                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                                                                        borderRadius: BorderRadius.circular(4.0),
+                                                                                      )),
+                                                                                      backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(181, 142, 0, 0.9)),
+                                                                                    ),
                                                                                   ),
                                                                                 ),
-                                                                              ),
+                                                                              if (checkOpen == 'fechado')
+                                                                                const Text('Disponible entre \n 00:00 et 13:30', style: TextStyle(fontFamily: 'Poppins', package: 'awesome_package', fontWeight: FontWeight.w500, color: Colors.red, fontSize: 15)),
                                                                               SizedBox(
-                                                                                width: MediaQuery.of(context).size.height * 0.02,
+                                                                                width: MediaQuery.of(context).size.width * 0.06,
                                                                               ),
                                                                             ],
                                                                           ),
@@ -498,8 +524,9 @@ class _MenuEstudanteState extends State<MenuEstudante> {
                         });
                   } else {
                     return const Center(
-                      child: Text("Il n'y a pas de produits"),
-                    );
+                        child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color.fromRGBO(181, 142, 0, 0.9))));
                   }
                 }),
           ],

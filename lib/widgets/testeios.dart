@@ -56,7 +56,7 @@ class _DeviceDetailDemoState extends State<DeviceDetailDemo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RaisedButton(
+            /*RaisedButton(
               padding: EdgeInsets.all(14),
               color: Colors.cyan[50],
               onPressed: () {
@@ -66,7 +66,7 @@ class _DeviceDetailDemoState extends State<DeviceDetailDemo> {
                 "Device Details",
                 style: TextStyle(color: Colors.black),
               ),
-            ),
+            ),*/
             deviceVersion.isNotEmpty &&
                     deviceName.isNotEmpty &&
                     identifier.isNotEmpty

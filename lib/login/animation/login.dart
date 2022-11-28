@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 import 'loginAnimation.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/animation.dart';
 import 'dart:async';
 import '../../Components/SignUpLink.dart';
 import '../../Components/Form.dart';

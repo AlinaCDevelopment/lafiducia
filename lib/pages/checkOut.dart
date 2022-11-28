@@ -52,6 +52,15 @@ class _CheckOutState extends State<CheckOut> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    comentariosController.dispose();
+    super.dispose();
+  }
+
+  final TextEditingController comentariosController =
+      new TextEditingController();
+
   List hourlist = ['1:00', '2:00', '3:00', '4:00'];
   String? _myHour;
   String? _myHourEstudante;
@@ -436,6 +445,9 @@ class _CheckOutState extends State<CheckOut> {
                                                 telefone2:
                                                     telefoneController.text,
                                                 hora: houra,
+                                                comentarios:
+                                                    comentariosController.text
+                                                        .toString(),
                                               ),
                                             ),
                                           );
@@ -471,6 +483,9 @@ class _CheckOutState extends State<CheckOut> {
                                                 telefone2:
                                                     telefoneController.text,
                                                 hora: houra,
+                                                comentarios:
+                                                    comentariosController.text
+                                                        .toString(),
                                               ),
                                             ),
                                           );
@@ -505,6 +520,9 @@ class _CheckOutState extends State<CheckOut> {
                                               telefone2:
                                                   telefoneController.text,
                                               hora: houra,
+                                              comentarios: comentariosController
+                                                  .text
+                                                  .toString(),
                                             ),
                                           ),
                                         );
@@ -527,6 +545,9 @@ class _CheckOutState extends State<CheckOut> {
                                               telefone2:
                                                   telefoneController.text,
                                               hora: houra,
+                                              comentarios: comentariosController
+                                                  .text
+                                                  .toString(),
                                             ),
                                           ),
                                         );
@@ -1655,6 +1676,72 @@ class _CheckOutState extends State<CheckOut> {
                                           )),
                                     ),
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 16.0, left: 5.0),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.2,
+                                          child: Text(
+                                            "COMMENTAIRES:",
+                                            textAlign: TextAlign.left,
+                                            overflow: TextOverflow.clip,
+                                            style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  181, 142, 0, 1),
+                                              fontFamily: 'Poppins',
+                                              package: 'awesome_package',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 10.0),
+                                          child: Container(
+                                              height: 300,
+                                              decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color: Color.fromRGBO(
+                                                      181, 142, 0, 1),
+                                                  width: 2,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 4, left: 8),
+                                                child: TextFormField(
+                                                  controller:
+                                                      comentariosController,
+                                                  decoration: InputDecoration(
+                                                    border: InputBorder.none,
+                                                    hintText:
+                                                        "insérez ici une note concernant votre commande",
+                                                    hintStyle: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          190, 190, 190, 1),
+                                                      fontFamily: 'Poppins',
+                                                      package:
+                                                          'awesome_package',
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
                               ),
                             )),

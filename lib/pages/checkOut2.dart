@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:la_fiducia/services/encomendas.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:la_fiducia/login/register_page.dart';
 import 'package:la_fiducia/pages/menu.dart';
@@ -34,6 +35,7 @@ class CheckOut2 extends StatefulWidget {
   final String codePostal2;
   final String telefone2;
   final hora;
+  final String comentarios;
 
   const CheckOut2({
     Key? key,
@@ -47,6 +49,7 @@ class CheckOut2 extends StatefulWidget {
     required this.codePostal2,
     required this.telefone2,
     required this.hora,
+    required this.comentarios,
   }) : super(key: key);
   @override
   _CheckOut2State createState() => _CheckOut2State();
@@ -59,20 +62,8 @@ class _CheckOut2State extends State<CheckOut2> {
     _getCitiesList();
     getToken();
     fetchIdLocalidadeID();
-    comentariosController.addListener(onListen);
     super.initState();
   }
-
-  @override
-  void dispose() {
-    comentariosController.removeListener(onListen);
-    super.dispose();
-  }
-
-  void onListen() => setState(() {});
-
-  final TextEditingController comentariosController =
-      new TextEditingController();
 
   var teste = 0;
   List hourlist = ['1:00', '2:00', '3:00', '4:00'];
@@ -274,22 +265,13 @@ class _CheckOut2State extends State<CheckOut2> {
     });
   }
 
-  Future goStep3() async {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => CheckOut3(),
-      ),
-    );
-  }
-
   String? idUser;
   bool _isLoading = false;
   bool _isLoading2 = false;
   bool _isLoading3 = false;
-  bool _isVisible = true;
+  bool _isVisibleButton = true;
   Widget build(BuildContext context) {
-    for (i = 0; i < 1;) {
+    if (i == 0) {
       fetchLocalidade;
       _getCitiesList();
       fetchIdLocalidadeID();
@@ -464,281 +446,97 @@ class _CheckOut2State extends State<CheckOut2> {
                                 width: MediaQuery.of(context).size.width * 0.45,
                                 alignment: Alignment.center,
                                 child: Visibility(
-                                  visible: _isVisible,
+                                  visible: _isVisibleButton,
                                   child: OutlinedButton(
-                                    onPressed: () {
-                                      /*------------------EPDATE PRODUTOS TABELA INGREDIENTESSSS ---------------------- */
-                                      _isVisible = false;
-
-                                      EmcomendasProdutos(String idEquip) async {
-                                        Map data = {
-                                          "id_equipamento": idEquip,
-                                        };
-
-                                        var jsonResponse = null;
-
-                                        var response = await http.post(
-                                            Uri.parse(
-                                                '${ApiDevLafiducia}/encomendas-produtos/'),
-                                            body: data,
-                                            headers: {
-                                              'Accept': 'application/json',
-                                              'Authorization': 'Bearer $token',
-                                            }).then((result) {});
-                                        ;
-
-                                        jsonResponse =
-                                            json.decode(response.body);
-                                      }
-
-                                      EmcomendasProdutos(
-                                        identifier.toString(),
-                                      );
-
-                                      EmcomendarIngredientes(
-                                          String idEquip) async {
-                                        Map data = {
-                                          "id_equipamento": idEquip,
-                                        };
-
-                                        var jsonResponse = null;
-
-                                        var response = await http.post(
-                                            Uri.parse(
-                                                '${ApiDevLafiducia}/encomendas-ingredientes/'),
-                                            body: data,
-                                            headers: {
-                                              'Accept': 'application/json',
-                                              'Authorization': 'Bearer $token',
-                                            }).then((result) {});
-                                        ;
-
-                                        jsonResponse =
-                                            json.decode(response.body);
-                                      }
-
-                                      EmcomendarIngredientes(
-                                        identifier.toString(),
-                                      );
-
-                                      /*-------------------------------------------------------------------------- */
-                                      /*------------------EPDATE PRODUTOS TABELA ENCOMANEDA ---------------------- */
-
-                                      ApagaEncomendasTemp() async {
-                                        var jsonResponse = null;
-
-                                        var response = await http.delete(
-                                            Uri.parse(
-                                                '${ApiDevLafiducia}/apagar-encomendas-temp/${identifier.toString()}'),
-                                            headers: {
-                                              'Accept': 'application/json',
-                                              'Authorization': 'Bearer $token',
-                                            }).then((result) {});
-                                        ;
-
-                                        jsonResponse =
-                                            json.decode(response.body);
-                                      }
-
-                                      ApagaIngredientesTemp() async {
-                                        var jsonResponse = null;
-
-                                        var response = await http.delete(
-                                            Uri.parse(
-                                                '${ApiDevLafiducia}/apagar-ingredientes-temp/${identifier.toString()}'),
-                                            headers: {
-                                              'Accept': 'application/json',
-                                              'Authorization': 'Bearer $token',
-                                            }).then((result) {});
-                                        ;
-
-                                        jsonResponse =
-                                            json.decode(response.body);
-                                      }
-
-                                      Future.delayed(const Duration(seconds: 2),
-                                          () {
-                                        ApagaEncomendasTemp();
-                                        ApagaIngredientesTemp();
-                                      });
-
-                                      EnvioEncomenda(
-                                          String user,
-                                          session,
-                                          preco,
-                                          portez,
-                                          morada,
-                                          codpostal,
-                                          localidade,
-                                          tlefone,
-                                          email,
-                                          nome,
-                                          envio,
-                                          hora_levantamento,
-                                          comentarios,
-                                          pagamento) async {
-                                        Map data = {
-                                          "id_user": user,
-                                          "id_session": session,
-                                          "preco": preco,
-                                          "portes": portez,
-                                          "morada": morada,
-                                          "cod_postal": codpostal,
-                                          "localidade": localidade,
-                                          "telefone": tlefone,
-                                          "email": email,
-                                          "nome": nome,
-                                          "envio": envio,
-                                          "hora_levantamento":
-                                              hora_levantamento,
-                                          "comentarios": comentarios,
-                                          "pagamento": pagamento,
-                                        };
-
-                                        var jsonResponse = null;
-
-                                        var response = await http.post(
-                                            Uri.parse(
-                                                '${ApiDevLafiducia}/encomendas/'),
-                                            body: data,
-                                            headers: {
-                                              'Accept': 'application/json',
-                                              'Authorization': 'Bearer $token',
-                                            }).then((result) {
-                                          Map<String, dynamic>
-                                              idDaRespostaBody =
-                                              new Map<String, dynamic>.from(
-                                                  json.decode(result.body));
-
-                                          setState(() {
-                                            idEncomenda = idDaRespostaBody['id']
-                                                .toString();
-                                            _isLoading = true;
-                                          });
-                                        });
-
-                                        AtualizaIdencomedaProd(
-                                            String idEquip, idEncomenda) async {
-                                          Map data = {
-                                            "id_equipamento": idEquip,
-                                            'id_encomenda': idEncomenda,
-                                          };
-
-                                          var jsonResponse = null;
-
-                                          var response = await http.put(
-                                              Uri.parse(
-                                                  '${ApiDevLafiducia}/atualiza-id_encomenda-produtos/'),
-                                              body: data,
-                                              headers: {
-                                                'Accept': 'application/json',
-                                                'Authorization':
-                                                    'Bearer $token',
-                                              }).then((result) {
-                                            setState(() {
-                                              _isLoading2 = true;
-                                            });
-                                          });
-
-                                          jsonResponse =
-                                              json.decode(response.body);
-                                        }
-
-                                        AtualizaIdencomedaIngredientes(
-                                            String idEquip, idEncomenda) async {
-                                          Map data = {
-                                            "id_equipamento": idEquip,
-                                            'id_encomenda': idEncomenda,
-                                          };
-
-                                          var jsonResponse = null;
-
-                                          var response = await http.put(
-                                              Uri.parse(
-                                                  '${ApiDevLafiducia}/atualiza-id_encomenda-ingredientes/'),
-                                              body: data,
-                                              headers: {
-                                                'Accept': 'application/json',
-                                                'Authorization':
-                                                    'Bearer $token',
-                                              }).then((result) {
-                                            setState(() {
-                                              _isLoading3 = true;
-                                            });
-                                          });
-
-                                          jsonResponse =
-                                              json.decode(response.body);
-                                        }
-
-                                        AtualizaIdencomedaProd(
-                                            identifier.toString(), idEncomenda);
-
-                                        AtualizaIdencomedaIngredientes(
-                                            identifier.toString(), idEncomenda);
-
-                                        EnvioEmail(String idEncomenda) async {
-                                          Map data = {
-                                            "id_encomenda": idEncomenda,
-                                          };
-
-                                          var jsonResponse = null;
-
-                                          var response = await http.post(
-                                              Uri.parse(
-                                                  '${ApiDevLafiducia}/enviar-encomenda/'),
-                                              body: data,
-                                              headers: {
-                                                'Accept': 'application/json',
-                                                'Authorization':
-                                                    'Bearer $token',
-                                              }).then((result) {});
-                                          ;
-
-                                          jsonResponse =
-                                              json.decode(response.body);
-                                        }
-
-                                        Future.delayed(
-                                            const Duration(seconds: 2), () {
-                                          ApagaEncomendasTemp();
-                                          ApagaIngredientesTemp();
-
-                                          EnvioEmail(
-                                            idEncomenda,
-                                          );
-                                        });
-
+                                    onPressed: () async {
+                                      try {
                                         Utils(context).startLoading();
 
-                                        Future.delayed(
-                                            const Duration(seconds: 3), () {
-                                          if (_isLoading &&
-                                              _isLoading2 &&
-                                              _isLoading3 &&
-                                              idEncomenda != '') {
-                                            Utils(context).stopLoading();
-                                            goStep3();
-                                          }
+                                        String idEquip = identifier.toString();
+
+                                        setState(() {
+                                          _isVisibleButton = false;
+                                          _isLoading2 = true;
+                                        });
+
+                                        await Encomendas.encomendarProdutos(
+                                            idEquip: idEquip, token: token);
+
+                                        await Encomendas.encomendarIngredientes(
+                                            idEquip: idEquip, token: token);
+
+                                        //Receber id da encomenda
+
+                                        final respostaEnvio =
+                                            await Encomendas.envioEncomenda(
+                                                idUser.toString(),
+                                                identifier.toString(),
+                                                widget.totalCarrinho.toString(),
+                                                portes.toString(),
+                                                adrex2.toString(),
+                                                codexpostalex2.toString(),
+                                                widget.localite.toString(),
+                                                telefonex2.toString(),
+                                                parts2[0]['email'],
+                                                parts2[0]['nome'].toString(),
+                                                widget.tipoLevantamento
+                                                    .toString(),
+                                                widget.hora.toString(),
+                                                widget.comentarios,
+                                                widget.mypagamento.toString(),
+                                                token: token);
+
+                                        print("RESPOSTA: $respostaEnvio");
+
+                                        Map<String, dynamic> idDaRespostaBody =
+                                            new Map<String, dynamic>.from(json
+                                                .decode(respostaEnvio.body));
+
+                                        final idResposta =
+                                            idDaRespostaBody['id'].toString();
+
+                                        //Substituir os IDs dos dispositivos pelos das encomendas
+
+                                        await Encomendas.atualizaIdencomedaProd(
+                                            idEncomenda: idResposta,
+                                            idEquip: idEquip,
+                                            token: token);
+
+                                        await Encomendas
+                                            .atualizaIdencomedaIngredientes(
+                                                idEncomenda: idResposta,
+                                                idEquip: idEquip,
+                                                token: token);
+
+                                        //Apagar os o carrinho
+                                        await Encomendas.apagaEncomendasTemp(
+                                            idEquip: idEquip, token: token);
+                                        await Encomendas.apagaIngredientesTemp(
+                                            idEquip: idEquip, token: token);
+                                        await Encomendas.envioEmail(
+                                            idEncomenda: idResposta,
+                                            token: token);
+
+                                        setState(() {
+                                          idEncomenda = idResposta.toString();
+                                          _isLoading2 = false;
+                                          _isVisibleButton = true;
+                                        });
+                                        Utils(context).stopLoading();
+                                        await Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        CheckOut3()));
+                                      } catch (e) {
+                                        print("ERRO $e");
+
+                                        setState(() {
+                                          _isLoading2 = false;
+                                          _isVisibleButton = true;
                                         });
                                       }
-
-                                      EnvioEncomenda(
-                                        idUser.toString(),
-                                        identifier.toString(),
-                                        widget.totalCarrinho.toString(),
-                                        portes.toString(),
-                                        adrex2.toString(),
-                                        codexpostalex2.toString(),
-                                        widget.localite.toString(),
-                                        telefonex2.toString(),
-                                        parts2[0]['email'],
-                                        parts2[0]['nome'].toString(),
-                                        widget.tipoLevantamento.toString(),
-                                        widget.hora.toString(),
-                                        comentariosController.text.toString(),
-                                        widget.mypagamento.toString(),
-                                      );
 
                                       /*-------------------------------------------------------------------------- */
                                     },
@@ -1606,92 +1404,6 @@ class _CheckOut2State extends State<CheckOut2> {
                           );
                         }),
                   ]),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: Text(
-                            "COMMENTAIRES:",
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.clip,
-                            style: TextStyle(
-                              color: Color.fromRGBO(181, 142, 0, 1),
-                              fontFamily: 'Poppins',
-                              package: 'awesome_package',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        /*Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Color.fromRGBO(181, 142, 0, 1),
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 8.0, bottom: 0),
-                                child: TextFormField(
-                                  maxLines: null,
-                                  controller: comentariosController,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText:
-                                        "insérez ici une note concernant votre commande",
-                                    hintStyle: TextStyle(
-                                      color: Color.fromRGBO(190, 190, 190, 1),
-                                      fontFamily: 'Poppins',
-                                      package: 'awesome_package',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        ),*/
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                              height: 300,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Color.fromRGBO(181, 142, 0, 1),
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 4, left: 8),
-                                child: TextFormField(
-                                  controller: comentariosController,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText:
-                                        "insérez ici une note concernant votre commande",
-                                    hintStyle: TextStyle(
-                                      color: Color.fromRGBO(190, 190, 190, 1),
-                                      fontFamily: 'Poppins',
-                                      package: 'awesome_package',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ),
-                              )),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
             ],

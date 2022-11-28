@@ -598,7 +598,7 @@ class _DetalhesState extends State<Detalhes> {
                                                 0.45,
                                         alignment: Alignment.center,
                                         child: OutlinedButton(
-                                          onPressed: () {
+                                          onPressed: () async {
                                             verifica3(String tele) async {
                                               var response = await http.get(
                                                   Uri.parse(
@@ -728,9 +728,10 @@ class _DetalhesState extends State<Detalhes> {
                                                   return res;
                                                 }
 
-                                                postProd();
+                                                await postProd();
 
-                                                Navigator.pushAndRemoveUntil(
+                                                await Navigator
+                                                    .pushAndRemoveUntil(
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (BuildContext
@@ -748,7 +749,7 @@ class _DetalhesState extends State<Detalhes> {
                                                   (route) => false,
                                                 );
                                               } else {
-                                                showDialog(
+                                                await showDialog(
                                                   context: context,
                                                   builder: (BuildContext
                                                           context) =>
@@ -758,7 +759,7 @@ class _DetalhesState extends State<Detalhes> {
                                               }
                                             }
 
-                                            verifica3(identifier);
+                                            await verifica3(identifier);
                                           },
                                           child: const Text('AJOUTER',
                                               style: TextStyle(
