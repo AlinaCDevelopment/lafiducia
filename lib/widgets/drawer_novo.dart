@@ -80,7 +80,7 @@ class _Drawer1State extends State<Drawer1> {
                           width: MediaQuery.of(context).size.width * 0.18,
                           child: IconButton(
                             icon: Image.asset('assets/avatar.png'),
-                            onPressed: () {},
+                            onPressed: null,
                           ),
                         ),
                       ),
@@ -198,7 +198,7 @@ class _Drawer1State extends State<Drawer1> {
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: IconButton(
                         icon: Image.asset('assets/user.png'),
-                        onPressed: () {},
+                        onPressed: null,
                       ),
                     ),
                     Text(
@@ -226,7 +226,7 @@ class _Drawer1State extends State<Drawer1> {
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: IconButton(
                         icon: Image.asset('assets/sobre-nos.png'),
-                        onPressed: () {},
+                        onPressed: null,
                       ),
                     ),
                     Text(
@@ -254,7 +254,7 @@ class _Drawer1State extends State<Drawer1> {
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: IconButton(
                         icon: Image.asset('assets/food-delivery.png'),
-                        onPressed: () {},
+                        onPressed: null,
                       ),
                     ),
                     Text(
@@ -282,7 +282,7 @@ class _Drawer1State extends State<Drawer1> {
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: IconButton(
                         icon: Image.asset('assets/notification.png'),
-                        onPressed: () {},
+                        onPressed: null,
                       ),
                     ),
                     Text(
@@ -320,7 +320,7 @@ class _Drawer1State extends State<Drawer1> {
                       width: MediaQuery.of(context).size.width * 0.09,
                       child: IconButton(
                         icon: Image.asset('assets/letter.png'),
-                        onPressed: () {},
+                        onPressed: null,
                       ),
                     ),
                     Text(

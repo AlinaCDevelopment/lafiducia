@@ -20,20 +20,18 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
   void setupWorldTime() async {
-    WorldTime instance = WorldTime();
     await Future.delayed(const Duration(milliseconds: 2000), () {});
 
-    Navigator.pushReplacementNamed(
+    await Navigator.pushReplacementNamed(
       context,
       '/menu',
     );
   }
 
   void ecraDeMabutencao() async {
-    WorldTime instance = WorldTime();
     await Future.delayed(const Duration(milliseconds: 2000), () {});
 
-    Navigator.pushReplacementNamed(
+    await Navigator.pushReplacementNamed(
       context,
       '/manutencao',
     );
@@ -41,7 +39,7 @@ class _LoadingState extends State<Loading> {
 
   List listEstadoFerias = [];
   var FechadoFerias;
-  Future<List<dynamic>> fetchFerias() async {
+  Future<List<dynamic>?> fetchFerias() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -51,8 +49,14 @@ class _LoadingState extends State<Loading> {
       setState(() {
         FechadoFerias = 200;
       });
-
-      return listEstadoFerias = json.decode(response.body);
+      print(response.body);
+      print('');
+      try {
+        List listaFerias = json.decode(response.body);
+        return listaFerias;
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -62,30 +66,6 @@ class _LoadingState extends State<Loading> {
       throw Exception('Failed to load album');
     }
   }
-
-  /*List listEstadoFolga = [];
-  var FechadoFolga;
-  Future<List<dynamic>> fetchFolga() async {
-    final response =
-        await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
-
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      setState(() {
-        FechadoFolga = 200;
-      });
-
-      return listEstadoFolga = json.decode(response.body);
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      setState(() {
-        FechadoFolga = 400;
-      });
-      throw Exception('Failed to load album');
-    }
-  }*/
 
   String identifier = '';
   Future<void> _deviceDetails() async {
@@ -111,25 +91,30 @@ class _LoadingState extends State<Loading> {
 
   List listEstado = [];
   var AbertaFechada;
-  Future<List<dynamic>> fetchEstado() async {
+  Future<List<dynamic>?> fetchEstado() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/estado-app/'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      setState(() {
-        AbertaFechada = 200;
-      });
+      AbertaFechada = 200;
 
-      return listEstado = json.decode(response.body);
+      print(response.body);
+      print('');
+      try {
+        List listEstado = json.decode(response.body);
+        return listEstado;
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       setState(() {
         AbertaFechada = 400;
       });
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -182,7 +167,6 @@ class _LoadingState extends State<Loading> {
   String appName = '';
   String packageName = '';
   String buildNumber = '';
-  var teste = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -193,24 +177,20 @@ class _LoadingState extends State<Loading> {
       });
     });
 
-    if (teste == 0) {
-      _deviceDetails();
-      fetchVersaoAndroid();
-      fetchVersaoIos();
-      teste++;
-    }
+    _deviceDetails();
+    fetchVersaoAndroid();
+    fetchVersaoIos();
     Future.delayed(const Duration(milliseconds: 20), () {
-      VERSIONANDOID = double.parse(listVersaoAndroid?[0]['v_android'] ?? 0);
-      VERSIONIOS = double.parse(listVersaoIos?[0]['v_ios'] ?? 0);
+      VERSIONANDOID =
+          double.parse(listVersaoAndroid?[0]['v_android'].toString() ?? "0");
+      VERSIONIOS = double.parse(listVersaoIos?[0]['v_ios'].toString() ?? '0');
     });
 
-    /*VERSIONANDOID = 12.4;
-    VERSIONIOS = 13.0;*/
     Future.delayed(const Duration(milliseconds: 20), () {
       if (i < 1) {
         if (AbertaFechada == 200) {
           if (identifier == 'Android') {
-            if (14.04 < VERSIONANDOID) {
+            if (14.06 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -223,7 +203,7 @@ class _LoadingState extends State<Loading> {
             }
           }
           if (identifier == 'iOS') {
-            if (14.04 < VERSIONIOS) {
+            if (14.06 < VERSIONIOS) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,

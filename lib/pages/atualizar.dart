@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:la_fiducia/util/world_time.dart';
-import 'package:la_fiducia/pages/constants.dart';
-import 'package:flutter/rendering.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:store_redirect/store_redirect.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:uuid/uuid.dart';
 
 class Atualizar extends StatefulWidget {
   @override

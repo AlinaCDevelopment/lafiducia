@@ -48,18 +48,20 @@ class _Ingredientes_checkOut2State extends State<Ingredientes_checkOut2> {
   }
 
   List? listProdutosCarrinho;
-  Future<List<dynamic>> fetchProdCarrinho() async {
+  Future<List<dynamic>?> fetchProdCarrinho() async {
     final response = await http.get(
         Uri.parse('${ApiDevLafiducia}/produto-carrinho-temp/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listProdutosCarrinho = json.decode(response.body);
+      try {
+        return listProdutosCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 

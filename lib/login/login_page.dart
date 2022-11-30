@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _token = token;
       _profile = profile;
-      nomeUser = profile!.name;
+      nomeUser = profile?.name;
       _email = email;
       _imageUrl = imageUrl;
     });
@@ -772,7 +772,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
 
-    signInJaRegistado(user!.email);
+    if (user != null) signInJaRegistado(user!.email);
   }
 
   Future signInFaceBook() async {

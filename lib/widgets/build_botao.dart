@@ -49,7 +49,7 @@ class _BuildbotaoState extends State<Buildbotao> {
     http.Response response;
     response = await http.get(Uri.parse('${ApiDevLafiducia}/menu-estudante/'));
     /*if (response.statusCode == 400) {*/
-    numBolas = listResponse!.length;
+    numBolas = listResponse?.length;
     /*} else if (response.statusCode == 400) {
       numBolas = listResponse!.length - 1;
     }*/
@@ -111,7 +111,7 @@ class _BuildbotaoState extends State<Buildbotao> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                       image: NetworkImage(
-                                        'https://www.lafiducia.lu/ficheiros/icons/${listResponse![index]['icon'].toString()}',
+                                        'https://www.lafiducia.lu/ficheiros/icons/${listResponse?[index]['icon'].toString()}',
                                         scale:
                                             MediaQuery.of(context).size.width *
                                                 0.012,

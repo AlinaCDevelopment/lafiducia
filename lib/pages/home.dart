@@ -65,7 +65,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           /* ElevatedButton(
-            onPressed: () {},
+            onPressed: null,
             child: const Text('LOGIN'),
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
@@ -80,7 +80,7 @@ class _HomeState extends State<Home> {
           height: MediaQuery.of(context).size.width * 0.11,
           child: ButtonTheme(
             child: OutlinedButton(
-              onPressed: () {},
+              onPressed: null,
               child:
                   const Text('REGISTAR', style: TextStyle(color: Colors.black)),
               style: ButtonStyle(

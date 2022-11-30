@@ -119,9 +119,9 @@ class Single_cart_product extends StatelessWidget {
         trailing: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            new IconButton(onPressed: () {}, icon: Icon(Icons.arrow_drop_up)),
+            new IconButton(onPressed: null, icon: Icon(Icons.arrow_drop_up)),
             new Text('$cart_prod_gty'),
-            new IconButton(onPressed: () {}, icon: Icon(Icons.arrow_drop_down)),
+            new IconButton(onPressed: null, icon: Icon(Icons.arrow_drop_down)),
           ],
         ),
       ),

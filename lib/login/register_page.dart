@@ -1,15 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:la_fiducia/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:la_fiducia/pages/menu.dart';
 import 'package:la_fiducia/pages/constants.dart';
-import 'package:la_fiducia/login/login_page.dart';
-import 'package:la_fiducia/login/google_signin_api.dart';
 import 'package:http/http.dart' as http;
-import 'package:email_auth/email_auth.dart';
-import 'package:la_fiducia/login/auth.dart';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -90,14 +85,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
   String cityInfoUrl =
       'http://cleanions.bestweb.my/api/location/get_city_by_state_id';
-  Future<String> _getCitiesList() async {
+  Future<List<dynamic>> _getCitiesList() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/localidades/'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return citiesList = json.decode(response.body);
+      citiesList = json.decode(response.body);
+      return citiesList;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -616,7 +612,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: MediaQuery.of(context).size.width * 0.45,
                         alignment: Alignment.center,
                         child: OutlinedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             setState(() {
                               _isLoading = true;
                             });
@@ -628,6 +624,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                             bool phoneValid =
                                 RegExp(r'[0-9]{6,13}$').hasMatch(phone);
+
                             if (emailValid == true) {
                               if (passwordController.text == '') {
                                 showDialog(
@@ -673,14 +670,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                       _buildPopupDialogRgpd(context),
                                 );
                               } else {
-                                Register(
+                                await Register(
                                   emailController.text,
                                   passwordController.text,
                                   nomeController.text,
                                   telefoneController.text,
                                   moradaController.text,
                                   codigoPostalController.text,
-                                  _myCity,
+                                  _myCity!,
                                   rgpd,
                                   now.toString(),
                                   uniquecode,
@@ -721,10 +718,22 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Register(String email, pass, nome, telefone, morada, codigoPostal, _myCity,
-      rgpd, now, uniquecode, tipoRegisto, plataforma, tipo) async {
+  Future<void> Register(
+      String email,
+      String pass,
+      String nome,
+      String telefone,
+      String morada,
+      String codigoPostal,
+      String _myCity,
+      String rgpd,
+      String now,
+      String uniquecode,
+      String tipoRegisto,
+      String plataforma,
+      String tipo) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map data = {
+    Map<String, String> data = {
       'email': email,
       'password': pass,
       'nome': nome,
@@ -739,37 +748,104 @@ class _RegisterPageState extends State<RegisterPage> {
       'plataforma_registo': plataforma,
       'sistema_registo': tipo,
     };
-    var jsonResponse = null;
-    var response = await http.post(Uri.parse('${ApiDevLafiducia}/utilizadores'),
-        body: data);
+    var responseEmailVer =
+        await http.get(Uri.parse('${ApiDevLafiducia}/verifica-email/$email'));
+    print(responseEmailVer.body);
+    final Map<String, dynamic> responseJson =
+        json.decode(responseEmailVer.body);
+//joao_goncalves_7@hotmail.com
 
-    if (response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
+    if (responseJson['message'] == 'Este email já se encontra registado') {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          actions: <Widget>[
+            SizedBox(
+                height: MediaQuery.of(context).size.height / 6.8,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 60,
+                    ),
+                    Column(
+                      children: [
+                        Text("Cet e-mail est déjà enregistré",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Color.fromRGBO(181, 142, 0, 1),
+                              fontFamily: 'Poppins',
+                              package: 'awesome_package',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Réessayer",
+                              style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  package: 'awesome_package',
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
+                                  fontSize: 16)),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color.fromRGBO(181, 142, 0, 0.9)),
+                              side: MaterialStateProperty.all(BorderSide(
+                                  color: Color.fromRGBO(181, 142, 0, 0.9),
+                                  width: 0.0,
+                                  style: BorderStyle.solid))),
+                        ),
+                      ],
+                    ),
+                  ],
+                ))
+          ],
+        ),
+      );
+    } else {
+      var response = await http
+          .post(Uri.parse('${ApiDevLafiducia}/utilizadores'), body: data);
+      print(response.body);
+      print('');
 
-      if (jsonResponse != null) {
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+
+        if (jsonResponse != null) {
+          setState(() {
+            _isLoading = false;
+          });
+          /*sharedPreferences.setString("token", jsonResponse['token']);*/
+          print('ESTA ÈEEEEE A RESPOOSSTTTTTTAAAAA' + jsonResponse['token']);
+
+          save('token', jsonResponse['token']);
+
+          var prefs = await SharedPreferences.getInstance();
+          prefs.setString('token', jsonResponse['token']);
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (BuildContext context) => Menu()),
+              (Route<dynamic> route) => false);
+        }
+      } else if (response.statusCode == 400) {
         setState(() {
           _isLoading = false;
         });
-        /*sharedPreferences.setString("token", jsonResponse['token']);*/
-        print('ESTA ÈEEEEE A RESPOOSSTTTTTTAAAAA' + jsonResponse['token']);
-
-        save('token', jsonResponse['token']);
-
-        var prefs = await SharedPreferences.getInstance();
-        prefs.setString('token', jsonResponse['token']);
-
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => Menu()),
-            (Route<dynamic> route) => false);
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => _buildPopupDialog(context),
+        );
       }
-    } else if (response.statusCode == 400) {
-      setState(() {
-        _isLoading = false;
-      });
-      showDialog(
-        context: context,
-        builder: (BuildContext context) => _buildPopupDialog(context),
-      );
     }
   }
 

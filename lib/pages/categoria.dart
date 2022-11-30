@@ -46,18 +46,20 @@ class _CategoriaState extends State<Categoria> {
   }
 
   List? listProdutosCarrinho;
-  Future<List<dynamic>> fetchProdCarrinho() async {
+  Future<List<dynamic>?> fetchProdCarrinho() async {
     final response = await http.get(
         Uri.parse('${ApiDevLafiducia}/produto-carrinho-temp/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listProdutosCarrinho = json.decode(response.body);
+      try {
+        return listProdutosCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -134,24 +136,28 @@ class _CategoriaState extends State<Categoria> {
   }
 
   List? idMain;
-  Future<List<dynamic>> fetchidMain() async {
+  Future<List<dynamic>?> fetchidMain() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/contar-encomenda/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return idMain = json.decode(response.body);
+      try {
+        return idMain = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
   List listEstadoFerias = [];
   var FechadoFerias;
-  Future<List<dynamic>> fetchFerias() async {
+  Future<List<dynamic>?> fetchFerias() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -161,8 +167,11 @@ class _CategoriaState extends State<Categoria> {
       setState(() {
         FechadoFerias = 200;
       });
-
-      return listEstadoFerias = json.decode(response.body);
+      try {
+        return listEstadoFerias = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -175,7 +184,7 @@ class _CategoriaState extends State<Categoria> {
 
   List listEstadoFolga = [];
   var FechadoFolga;
-  Future<List<dynamic>> fetchFolga() async {
+  Future<List<dynamic>?> fetchFolga() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -185,8 +194,11 @@ class _CategoriaState extends State<Categoria> {
       setState(() {
         FechadoFolga = 200;
       });
-
-      return listEstadoFolga = json.decode(response.body);
+      try {
+        return listEstadoFolga = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.

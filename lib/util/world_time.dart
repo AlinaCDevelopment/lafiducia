@@ -1,7 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
-import 'package:la_fiducia/pages/constants.dart';
 
 class WorldTime {
   Future<void> getTime() async {

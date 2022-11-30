@@ -86,11 +86,8 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     getToken();
-    fetchData();
-    fetchBanners();
     fetchPratoSemana();
     fetchPratodia();
-    fetchFolga();
     fetchFerias();
     super.initState();
     _getSdkVersion();
@@ -160,42 +157,23 @@ class _MenuState extends State<Menu> {
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
-      // then parse the JSON.´
-      listProdutosCarrinho = json.decode(response.body);
-      return listProdutosCarrinho;
+      // then parse the JSON.
+      try {
+        return listProdutosCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
   Map? listResponse;
-  Future<Map<String, dynamic>> fetchData() async {
-    http.Response response;
-    response = await http.get(Uri.parse('${ApiDevLafiducia}/categorias'));
-    /*if (response.statusCode == 200) {
-      setState(() {
-        listResponse = json.decode(response.body);
-      });
-    }*/
-    return listResponse = json.decode(response.body);
-  }
 
   Map? listSugest;
-  Future<Map<String, dynamic>> fetchBanners() async {
-    http.Response response;
-    response = await http.get(Uri.parse('${ApiDevLafiducia}/sugestoes'));
-    /*if (response.statusCode == 200) {
-      setState(() {
-        listResponse = json.decode(response.body);
-      });
-    }*/
-    return listSugest = json.decode(response.body);
-  }
 
   List? listPatoDia;
-  Future<List<dynamic>> fetchPratodia() async {
+  Future<List<dynamic>?> fetchPratodia() async {
     final response = await http.get(Uri.parse('${ApiDevLafiducia}/prato-dia/'));
 
     if (response.statusCode == 200) {
@@ -205,7 +183,7 @@ class _MenuState extends State<Menu> {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -222,7 +200,7 @@ class _MenuState extends State<Menu> {
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -245,30 +223,6 @@ class _MenuState extends State<Menu> {
       // then throw an exception.
       setState(() {
         FechadoFerias = 400;
-      });
-      throw Exception('Failed to load album');
-    }
-  }
-
-  Map? listEstadoFolga;
-  var FechadoFolga;
-  Future<Map<String, dynamic>> fetchFolga() async {
-    final response =
-        await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
-
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      setState(() {
-        FechadoFolga = 200;
-      });
-
-      return listEstadoFolga = json.decode(response.body);
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      setState(() {
-        FechadoFolga = 400;
       });
       throw Exception('Failed to load album');
     }
@@ -630,7 +584,7 @@ class _MenuState extends State<Menu> {
                                 width: MediaQuery.of(context).size.width * 0.09,
                                 child: IconButton(
                                   icon: Image.asset('assets/sobre-nos.png'),
-                                  onPressed: () {},
+                                  onPressed: null,
                                 ),
                               ),
                               Text(
@@ -680,7 +634,7 @@ class _MenuState extends State<Menu> {
                                 width: MediaQuery.of(context).size.width * 0.09,
                                 child: IconButton(
                                   icon: Image.asset('assets/food-delivery.png'),
-                                  onPressed: () {},
+                                  onPressed: null,
                                 ),
                               ),
                               Text(
@@ -730,7 +684,7 @@ class _MenuState extends State<Menu> {
                                 width: MediaQuery.of(context).size.width * 0.09,
                                 child: IconButton(
                                   icon: Image.asset('assets/letter.png'),
-                                  onPressed: () {},
+                                  onPressed: null,
                                 ),
                               ),
                               Text(
@@ -796,7 +750,7 @@ class _MenuState extends State<Menu> {
                                               child: IconButton(
                                                 icon: Image.asset(
                                                     'assets/notification.png'),
-                                                onPressed: () {},
+                                                onPressed: null,
                                               ),
                                             ),
                                             Text(
@@ -912,7 +866,7 @@ class _MenuState extends State<Menu> {
                                       MediaQuery.of(context).size.width * 0.18,
                                   child: IconButton(
                                     icon: Image.asset('assets/avatar.png'),
-                                    onPressed: () {},
+                                    onPressed: null,
                                   ),
                                 ),
                               ),
@@ -1043,7 +997,7 @@ class _MenuState extends State<Menu> {
                                 width: MediaQuery.of(context).size.width * 0.09,
                                 child: IconButton(
                                   icon: Image.asset('assets/sobre-nos.png'),
-                                  onPressed: () {},
+                                  onPressed: null,
                                 ),
                               ),
                               Text(
@@ -1093,7 +1047,7 @@ class _MenuState extends State<Menu> {
                                 width: MediaQuery.of(context).size.width * 0.09,
                                 child: IconButton(
                                   icon: Image.asset('assets/letter.png'),
-                                  onPressed: () {},
+                                  onPressed: null,
                                 ),
                               ),
                               Text(
@@ -1159,7 +1113,7 @@ class _MenuState extends State<Menu> {
                                               child: IconButton(
                                                 icon: Image.asset(
                                                     'assets/notification.png'),
-                                                onPressed: () {},
+                                                onPressed: null,
                                               ),
                                             ),
                                             Text(
@@ -1241,11 +1195,11 @@ class _MenuState extends State<Menu> {
               ),
               /* BuildBanner(),*/
 
-              FutureBuilder<List<dynamic>>(
+              FutureBuilder<List<dynamic>?>(
                   future: fetchPratodia(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (listPatoDia != null || listPratoSemana != null) {
-                      return FutureBuilder<List<dynamic>>(
+                      return FutureBuilder<List<dynamic>?>(
                           future: fetchPratodia(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {

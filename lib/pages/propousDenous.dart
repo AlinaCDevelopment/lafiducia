@@ -1,25 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:la_fiducia/login/register_page.dart';
 import 'package:la_fiducia/pages/menu.dart';
-import 'package:la_fiducia/login/auth.dart';
-import 'package:la_fiducia/pages/constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:la_fiducia/widgets/colors.dart';
-import 'package:la_fiducia/widgets/socialButtons.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:la_fiducia/login/sharedPref.dart';
-import 'login.dart';
-import 'dart:io';
-import 'package:device_info/device_info.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
-import 'package:la_fiducia/pages/checkOut2.dart';
-import 'package:la_fiducia/pages/menu.dart';
 
 class PropousDeNous extends StatefulWidget {
   @override

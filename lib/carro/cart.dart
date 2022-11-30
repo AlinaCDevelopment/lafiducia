@@ -54,7 +54,7 @@ class _CartState extends State<Cart> {
 
   var checkOpen = '';
   List? verifica_menu_estudante_aberto;
-  Future<List<dynamic>> fetchVerificacaoMenuEstudante() async {
+  Future<List<dynamic>?> fetchVerificacaoMenuEstudante() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/bloquear-botao/'));
 
@@ -62,44 +62,55 @@ class _CartState extends State<Cart> {
       setState(() {
         checkOpen = 'aberto';
       });
-      return verifica_menu_estudante_aberto = json.decode(response.body);
+      try {
+        return verifica_menu_estudante_aberto = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       setState(() {
         checkOpen = 'fechado';
       });
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
   List? listProdutosCarrinho;
-  Future<List<dynamic>> fetchProdCarrinho() async {
+  Future<List<dynamic>?> fetchProdCarrinho() async {
     final response = await http.get(
         Uri.parse('${ApiDevLafiducia}/produto-carrinho-temp/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listProdutosCarrinho = json.decode(response.body);
+      try {
+        return listProdutosCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
   List? listTotalProdIngCarrinho;
-  Future<List<dynamic>> fetchTotalProdIngCarrinho() async {
+  Future<List<dynamic>?> fetchTotalProdIngCarrinho() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/total-carrinho/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listTotalProdIngCarrinho = json.decode(response.body);
+
+      try {
+        return listTotalProdIngCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -132,33 +143,32 @@ class _CartState extends State<Cart> {
   }
 
   late List listProdutos;
-  Future<List<dynamic>> fetchProdutos() async {
+  Future<List<dynamic>?> fetchProdutos() async {
     final response = await http.get(Uri.parse('${ApiDevLafiducia}/produtos/'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listProdutos = json.decode(response.body);
+
+      try {
+        return listProdutos = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
   List listIngredientes = [];
-  Future<List<dynamic>> fetchIngredientes() async {
+  Future<List<dynamic>?> fetchIngredientes() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ingredientes'));
 
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
+    try {
       return listIngredientes = json.decode(response.body);
-    } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+    } catch (e) {
+      return null;
     }
   }
 

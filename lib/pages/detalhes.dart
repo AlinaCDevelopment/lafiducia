@@ -223,7 +223,7 @@ class _DetalhesState extends State<Detalhes> {
 
   List listEstadoFolga = [];
   var FechadoFolga;
-  Future<List<dynamic>> fetchFolga() async {
+  Future<List<dynamic>?> fetchFolga() async {
     final response =
         await http.get(Uri.parse('${ApiDevLafiducia}/ferias-restaurante/'));
 
@@ -233,8 +233,11 @@ class _DetalhesState extends State<Detalhes> {
       setState(() {
         FechadoFolga = 200;
       });
-
-      return listEstadoFolga = json.decode(response.body);
+      try {
+        return listEstadoFolga = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -369,18 +372,22 @@ class _DetalhesState extends State<Detalhes> {
   }
 
   List? idMain;
-  Future<List<dynamic>> fetchidMain() async {
+  Future<List<dynamic>?> fetchidMain() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/contar-encomenda/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return idMain = json.decode(response.body);
+      try {
+        return idMain = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -848,7 +855,7 @@ class _DetalhesState extends State<Detalhes> {
                                                                 .width *
                                                             0.055,
                                                         child: OutlinedButton(
-                                                          onPressed: () {},
+                                                          onPressed: null,
                                                           child: const Text(
                                                               'BOISSONS',
                                                               style: TextStyle(
@@ -905,7 +912,7 @@ class _DetalhesState extends State<Detalhes> {
                                                                 .width *
                                                             0.055,
                                                         child: OutlinedButton(
-                                                          onPressed: () {},
+                                                          onPressed: null,
                                                           child: const Text(
                                                               'DESSERTS',
                                                               style: TextStyle(

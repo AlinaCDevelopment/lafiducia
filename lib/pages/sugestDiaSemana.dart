@@ -13,7 +13,7 @@ import 'package:la_fiducia/widgets/socialButtons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:la_fiducia/login/sharedPref.dart';
-import 'login.dart';
+
 import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
@@ -50,18 +50,22 @@ class _SugestDiaSemanaState extends State<SugestDiaSemana> {
   var decoded2;
 
   List? idMain;
-  Future<List<dynamic>> fetchidMain() async {
+  Future<List<dynamic>?> fetchidMain() async {
     final response = await http
         .get(Uri.parse('${ApiDevLafiducia}/contar-encomenda/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return idMain = json.decode(response.body);
+      try {
+        return idMain = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 
@@ -119,18 +123,20 @@ class _SugestDiaSemanaState extends State<SugestDiaSemana> {
   }
 
   List? listProdutosCarrinho;
-  Future<List<dynamic>> fetchProdCarrinho() async {
+  Future<List<dynamic>?> fetchProdCarrinho() async {
     final response = await http.get(
         Uri.parse('${ApiDevLafiducia}/produto-carrinho-temp/${identifier}'));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return listProdutosCarrinho = json.decode(response.body);
+      try {
+        return listProdutosCarrinho = json.decode(response.body);
+      } catch (e) {
+        return null;
+      }
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      return null;
     }
   }
 

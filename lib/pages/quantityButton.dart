@@ -1,17 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:device_info/device_info.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:la_fiducia/carro/cart.dart';
-import 'dart:math';
-import 'package:la_fiducia/pages/boissons.dart';
 import 'package:la_fiducia/pages/constants.dart';
 
 var prexoIngredientes = 0.0;
