@@ -1,5 +1,5 @@
 name: la_fiducia
-description: A new Flutter project.
+description: A delicious project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 14.06.0+1
+version: 14.07.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -37,7 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dots_indicator: ^2.0.0
   carousel_slider: ^4.0.0
-  getwidget: ^2.0.3
+  # getwidget: ^2.0.3
   cached_network_image: ^3.1.0
   flutter_staggered_grid_view: ^0.4.0
   flutter_cart: ^0.0.6
@@ -112,18 +112,7 @@ flutter:
     - assets/introPizza.png
     - assets/1.png
     - assets/2.png
-    - assets/fish.png
     - assets/pizza.png
-    - assets/noodle.png
-    - assets/beef.png
-    - assets/bread.png
-    - assets/cupcake.png
-    - assets/orange-juice.png
-    - assets/salad.png
-    - assets/sausage.png
-    - assets/spaghetti.png
-    - assets/tempura.png
-    - assets/iconAppbar.png
     - assets/imagem_indisponivel.jpg
     - assets/next.png
     - assets/user.png
@@ -133,53 +122,9 @@ flutter:
     - assets/sobre-nos.png
     - assets/food-delivery.png
     - assets/avatar.png
-    - assets/teste.jpg
-    - assets/carrinhoCompras.png
     - assets/plats.png
     - assets/boissons.png
     - assets/desserts.png
-    - assets/Ingredientes/Melon.jpg
-    - assets/Ingredientes/plus 4 Fromages.jpg
-    - assets/Ingredientes/plus Ail.jpg
-    - assets/Ingredientes/plus Ananas.jpg
-    - assets/Ingredientes/plus Anchois.jpg
-    - assets/Ingredientes/plus Artichaut.jpg
-    - assets/Ingredientes/plus Aubergine.jpg
-    - assets/Ingredientes/plus Basilic.jpg
-    - assets/Ingredientes/plus Bolognese.jpg
-    - assets/Ingredientes/plus Capres.jpg
-    - assets/Ingredientes/plus Carpaccio.jpg
-    - assets/Ingredientes/plus Champ. frais.jpg
-    - assets/Ingredientes/plus Courgettes.jpg
-    - assets/Ingredientes/plus Crevettes.jpg
-    - assets/Ingredientes/plus Escargots.jpg
-    - assets/Ingredientes/plus Fruit de Mer.jpg
-    - assets/Ingredientes/plus Gorgonzola.jpg
-    - assets/Ingredientes/plus Jambom parme.jpg
-    - assets/Ingredientes/plus Jambon cuit.jpg
-    - assets/Ingredientes/plus Lardon.jpg
-    - assets/Ingredientes/plus Mozzarella.jpg
-    - assets/Ingredientes/plus Oeuf.jpg
-    - assets/Ingredientes/plus Oignons.jpg
-    - assets/Ingredientes/plus Olives.jpg
-    - assets/Ingredientes/plus Parmigiano.jpg
-    - assets/Ingredientes/plus Poivrons.jpg
-    - assets/Ingredientes/plus Ricotta.jpg
-    - assets/Ingredientes/plus Rucola.jpg
-    - assets/Ingredientes/plus Salami doux.jpg
-    - assets/Ingredientes/plus Salami Piquant.jpg
-    - assets/Ingredientes/plus Saumon Fume.jpg
-    - assets/Ingredientes/plus Scampis.jpg
-    - assets/Ingredientes/plus Sp. Bolognese.jpg
-    - assets/Ingredientes/plus Thon.jpg
-    - assets/Ingredientes/plus Tomate Fraiche.jpg
-    - assets/Ingredientes/Spagheti natur.jpg
-    - assets/Ingredientes/Supl. Carpaccio.jpg
-    - assets/Ingredientes/Supl. Chevre.jpg
-    - assets/Ingredientes/Supl. Poulet.jpg
-    - assets/Ingredientes/Supl.Creme.jpg
-    - assets/Ingredientes/Supl.Epinards.jpg
-    - assets/Ingredientes/Supl.Viande Hache.jpg
     - assets/right-arrow.png
     - assets/menu_hamburger.png
     - assets/carroInativo.png

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:la_fiducia/util/world_time.dart';
+import 'package:la_fiducia/Useless/world_time.dart';
 import 'package:la_fiducia/pages/constants.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:convert';
@@ -22,6 +22,13 @@ class _LoadingState extends State<Loading> {
   void setupWorldTime() async {
     await Future.delayed(const Duration(milliseconds: 2000), () {});
 
+    if (FechadoFerias == 200) {
+    } else {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => _buildPopupDialogFerias(context),
+      );
+    }
     await Navigator.pushReplacementNamed(
       context,
       '/menu',
@@ -63,7 +70,7 @@ class _LoadingState extends State<Loading> {
       setState(() {
         FechadoFerias = 400;
       });
-      throw Exception('Failed to load album');
+      //throw Exception('Failed to load album');
     }
   }
 
@@ -190,7 +197,7 @@ class _LoadingState extends State<Loading> {
       if (i < 1) {
         if (AbertaFechada == 200) {
           if (identifier == 'Android') {
-            if (14.06 < VERSIONANDOID) {
+            if (14.07 < VERSIONANDOID) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,
@@ -203,7 +210,7 @@ class _LoadingState extends State<Loading> {
             }
           }
           if (identifier == 'iOS') {
-            if (14.06 < VERSIONIOS) {
+            if (14.07 < VERSIONIOS) {
               Timer.run(() {
                 Navigator.pushAndRemoveUntil(
                   context,

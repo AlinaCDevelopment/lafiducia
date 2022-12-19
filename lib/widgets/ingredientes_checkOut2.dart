@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:la_fiducia/pages/boissons.dart';
 import 'package:la_fiducia/pages/menu.dart';
-import 'package:la_fiducia/util/customSwitch.dart';
+import 'package:la_fiducia/Useless/customSwitch.dart';
 import 'package:flutter/gestures.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';

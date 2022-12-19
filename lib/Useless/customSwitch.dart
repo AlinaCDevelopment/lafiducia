@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class CustomSwitch extends StatefulWidget {
@@ -74,3 +74,5 @@ class _CustomSwitchState extends State<CustomSwitch>
     );
   }
 }
+ */
+//TODO

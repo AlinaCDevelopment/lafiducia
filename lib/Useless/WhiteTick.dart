@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class Tick extends StatelessWidget {
   final DecorationImage image;
@@ -14,4 +14,4 @@ class Tick extends StatelessWidget {
       ),
     ));
   }
-}
+} */

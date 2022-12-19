@@ -368,14 +368,14 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = FKM2C2W74T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 14.06.0;
+				FLUTTER_BUILD_NAME = 14.07.0;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 14.06;
+				MARKETING_VERSION = 14.07;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.lafiducia.lu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -501,14 +501,14 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = FKM2C2W74T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 14.06.0;
+				FLUTTER_BUILD_NAME = 14.07.0;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 14.06;
+				MARKETING_VERSION = 14.07;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.lafiducia.lu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -528,14 +528,14 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = FKM2C2W74T;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 14.06.0;
+				FLUTTER_BUILD_NAME = 14.07.0;
 				INFOPLIST_FILE = Runner/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 14.06;
+				MARKETING_VERSION = 14.07;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.lafiducia.lu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

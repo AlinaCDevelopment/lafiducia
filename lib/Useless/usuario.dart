@@ -1,4 +1,4 @@
-class Usuario {
+/* class Usuario {
   late int sucess;
   late String message;
   late String token;
@@ -23,3 +23,6 @@ class Usuario {
     return 'Usuario(sucess: $sucess, message: $message, token: $token)';
   }
 }
+ */
+
+//TODO
